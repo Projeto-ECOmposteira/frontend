@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext } from "react";
 import Button from "@material-ui/core/Button";
 import TextField from "@material-ui/core/TextField";
 import Link from "@material-ui/core/Link";
@@ -8,9 +8,16 @@ import Container from "@material-ui/core/Container";
 import { useStyles } from "./styles";
 import Copyright from "../../components/Copyright";
 import LogoImage from "../../assets/img/logo.svg";
+import AuthContext from "../../contexts/auth";
 
 export default function SignIn() {
   const classes = useStyles();
+  const { signIn } = useContext(AuthContext);
+
+  async function handleSign(event:any) {
+    event.preventDefault();
+    signIn();
+  }
 
   return (
     <Container component="main" maxWidth="xs">
@@ -22,7 +29,7 @@ export default function SignIn() {
             alt="Projeto ECOmposteira"
           />
         </div>
-        <form className={classes.form} noValidate>
+        <form className={classes.form} noValidate onSubmit={handleSign}>
           <TextField
             variant="outlined"
             margin="normal"
