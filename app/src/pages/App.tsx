@@ -1,6 +1,7 @@
 import React from "react";
-import Button from "@material-ui/core/Button";
+import CssBaseline from "@material-ui/core/CssBaseline";
 import { createMuiTheme, ThemeProvider } from "@material-ui/core/styles";
+import SignIn from "./SignIn";
 
 const theme = createMuiTheme({
   palette: {
@@ -14,13 +15,8 @@ const theme = createMuiTheme({
 function App() {
   return (
     <ThemeProvider theme={theme}>
-      <div>
-        <header>
-          <Button variant="contained" color="secondary">
-            Hello World
-          </Button>
-        </header>
-      </div>
+      <CssBaseline />
+      <SignIn />
     </ThemeProvider>
   );
 }
