@@ -3,6 +3,7 @@ interface Response {
   user: {
     name: string;
     email: string;
+    isSupermarket: boolean;
   };
 }
 
@@ -12,6 +13,7 @@ export function signIn(): Response {
     user: {
       name: "Welison Almeida",
       email: "welison.almeida.923@gmail.com",
+      isSupermarket: false,
     },
   };
 }

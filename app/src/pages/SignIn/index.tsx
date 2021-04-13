@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import Button from "@material-ui/core/Button";
 import TextField from "@material-ui/core/TextField";
 import Link from "@material-ui/core/Link";
@@ -14,7 +14,10 @@ export default function SignIn() {
   const classes = useStyles();
   const { signIn } = useContext(AuthContext);
 
-  async function handleSign(event:any) {
+  const [email, setEmail] = useState<String>("");
+  const [password, setPassword] = useState<String>("");
+
+  async function handleSign(event: any) {
     event.preventDefault();
     signIn();
   }
@@ -40,6 +43,8 @@ export default function SignIn() {
             name="email"
             autoComplete="email"
             autoFocus
+            value={email}
+            onChange={(event) => setEmail(event.target.value)}
           />
           <TextField
             variant="outlined"
@@ -51,6 +56,8 @@ export default function SignIn() {
             type="password"
             id="password"
             autoComplete="current-password"
+            value={password}
+            onChange={(event) => setPassword(event.target.value)}
           />
           <Button
             type="submit"
