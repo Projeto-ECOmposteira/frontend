@@ -75,7 +75,7 @@ export default function SignIn() {
               </Link>
             </Grid>
             <Grid item>
-              <Link href="#" variant="body2">
+              <Link href="cadastrar_supermercado/" variant="body2">
                 {"Cadastrar supermercado"}
               </Link>
             </Grid>
