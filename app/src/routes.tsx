@@ -1,21 +1,18 @@
-import { Switch, Route } from "react-router-dom";
-import SignIn from "./pages/SignIn";
-import Home from "./pages/Home";
 import { useContext } from "react";
 import AuthContext from "./contexts/auth";
+import InternalRoutes from "./routes/InternalRoutes";
+import ExternalRoutes from "./routes/ExternalRoutes";
 
-// TODO: criar pasta "routes" com dois componentes: 
-// rotas autenticadas e rotas não autenticadas
 export default function Routes() {
   const { signed } = useContext(AuthContext);
 
   return (
-    <Switch>
+    <>
       {signed ? (
-        <Route path="/home" component={Home} />
+        <InternalRoutes />
       ) : (
-        <Route path="/" exact component={SignIn} />
+        <ExternalRoutes />
       )}
-    </Switch>
-  );
+    </>
+  )
 }
