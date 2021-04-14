@@ -1,26 +1,14 @@
-import React, { useContext, useState } from "react";
+import { useState } from "react";
 import Button from "@material-ui/core/Button";
 import TextField from "@material-ui/core/TextField";
-import Link from "@material-ui/core/Link";
 import Grid from "@material-ui/core/Grid";
-import Box from "@material-ui/core/Box";
 import Container from "@material-ui/core/Container";
 import { useStyles } from "./styles";
-import Copyright from "../../components/Copyright";
 import LogoImage from "../../assets/img/logo.svg";
-import AuthContext from "../../contexts/auth";
-import NativeSelect from '@material-ui/core/NativeSelect';
 import FormControl from '@material-ui/core/FormControl';
 import InputLabel from '@material-ui/core/InputLabel';
 import Select from '@material-ui/core/Select';
-// import React from 'react';
-import { makeStyles } from '@material-ui/core/styles';
-import Input from '@material-ui/core/Input';
-// import InputLabel from '@material-ui/core/InputLabel';
 import InputAdornment from '@material-ui/core/InputAdornment';
-// import FormControl from '@material-ui/core/FormControl';
-// import TextField from '@material-ui/core/TextField';
-// import Grid from '@material-ui/core/Grid';
 import PersonIcon from '@material-ui/icons/Person';
 import VpnKeyIcon from '@material-ui/icons/VpnKey';
 import OutlinedInput from '@material-ui/core/OutlinedInput';
@@ -28,7 +16,29 @@ import OutlinedInput from '@material-ui/core/OutlinedInput';
 export default function SupermarketRegister() {
   const classes = useStyles();
 
-  const [email, setEmail] = useState<String>("");
+  const [state, setState] = useState({ 
+    name: "", 
+    surname: "",
+    cellNumber: "",
+    comercialName: "",
+    CNPJ: "",
+    CEP: "",
+    comercialCellNumber: "",
+    tiedAgriculturalProducer: "",
+    eMail: "",
+    password: ""
+  });
+  const handleChange = (e: any) => {
+    const { name, value } = e.target;
+    setState(prevState => ({
+      ...prevState,
+      [name]: value
+    }));
+  };
+
+  const register = () =>{
+    console.log(state)
+  }
 
   return (
     <Container component="main" maxWidth="md">
@@ -55,12 +65,12 @@ export default function SupermarketRegister() {
                 margin="normal"
                 required
                 fullWidth
-                // id="email"
+                id="name"
                 label="Nome"
-                // name="email"
-                // autoComplete="email"
+                name="name"
+                autoComplete="given-name"
                 autoFocus
-                onChange={(event) => null}
+                onChange={handleChange}
               />
             </Grid>
             <Grid item xs={3}>
@@ -69,12 +79,12 @@ export default function SupermarketRegister() {
                 margin="normal"
                 required
                 fullWidth
-                // id="email"
+                id="surname"
                 label="Sobrenome"
-                // name="email"
-                // autoComplete="email"
+                name="surname"
+                autoComplete="family-name"
                 autoFocus
-                onChange={(event) => null}
+                onChange={handleChange}
               />
             </Grid>
             <Grid item xs={6}>
@@ -83,12 +93,12 @@ export default function SupermarketRegister() {
                 margin="normal"
                 required
                 fullWidth
-                // id="email"
+                id="cellNumber"
                 label="Telefone"
-                // name="email"
-                // autoComplete="email"
+                name="cellNumber"
+                autoComplete="tel-national"
                 autoFocus
-                onChange={(event) => null}
+                onChange={handleChange}
               />
             </Grid>
           </Grid>
@@ -106,12 +116,12 @@ export default function SupermarketRegister() {
                 margin="normal"
                 required
                 fullWidth
-                // id="email"
+                id="comercialName"
                 label="Nome comercial"
-                // name="email"
-                // autoComplete="email"
+                name="comercialName"
+                autoComplete="organization"
                 autoFocus
-                onChange={(event) => null}
+                onChange={handleChange}
               />
             </Grid>
             <Grid item xs={6}>
@@ -120,12 +130,11 @@ export default function SupermarketRegister() {
                 margin="normal"
                 required
                 fullWidth
-                // id="email"
+                id="CNPJ"
                 label="CNPJ"
-                // name="email"
-                // autoComplete="email"
+                name="CNPJ"
                 autoFocus
-                onChange={(event) => null}
+                onChange={handleChange}
               />
             </Grid>
           </Grid>
@@ -142,12 +151,12 @@ export default function SupermarketRegister() {
                 margin="normal"
                 required
                 fullWidth
-                // id="email"
+                id="CEP"
                 label="CEP"
-                // name="email"
-                // autoComplete="email"
+                name="CEP"
+                autoComplete="postal-code"
                 autoFocus
-                onChange={(event) => null}
+                onChange={handleChange}
               />
             </Grid>
             <Grid item xs={6}>
@@ -156,12 +165,12 @@ export default function SupermarketRegister() {
                 margin="normal"
                 required
                 fullWidth
-                // id="email"
+                id="comercialCellNumber"
                 label="Telefone"
-                // name="email"
-                // autoComplete="email"
+                name="comercialCellNumber"
+                autoComplete="tel-national"
                 autoFocus
-                onChange={(event) => null}
+                onChange={handleChange}
               />
             </Grid>
           </Grid>
@@ -178,13 +187,10 @@ export default function SupermarketRegister() {
                 <Select
                   required
                   native
-                  // value={state.age}
-                  // onChange={handleChange}
+                  onChange={handleChange}
                   label="Produtor agrícola vinculado *"
-                // inputProps={{
-                //   name: 'age',
-                //   id: 'outlined-age-native-simple',
-                // }}
+                  id="tiedAgriculturalProducer"
+                  name="tiedAgriculturalProducer"
                 >
                   <option aria-label="None" value="" />
                   <option value={1}>José</option>
@@ -208,10 +214,10 @@ export default function SupermarketRegister() {
               <InputLabel htmlFor="outlined-adornment-password">E-mail *</InputLabel>
               <OutlinedInput
                 required
-                id="outlined-adornment-password"
-                // type={values.showPassword ? 'text' : 'password'}
-                // value={values.password}
-                // onChange={handleChange('password')}
+                id="eMail"
+                name="eMail"
+                autoComplete="email"
+                onChange={handleChange}
                 endAdornment={
                   <InputAdornment position="end"><PersonIcon /></InputAdornment>
                 }
@@ -224,33 +230,15 @@ export default function SupermarketRegister() {
               <InputLabel htmlFor="outlined-adornment-password">Senha *</InputLabel>
               <OutlinedInput
                 required
-                id="outlined-adornment-password"
-                // type={values.showPassword ? 'text' : 'password'}
-                // value={values.password}
-                // onChange={handleChange('password')}
+                id="password"
+                name="password"
+                onChange={handleChange}
                 endAdornment={
                   <InputAdornment position="end"><VpnKeyIcon /></InputAdornment>
                 }
                 labelWidth={70}
               />
             </FormControl>
-            {/* <FormControl>
-              <TextField
-                variant="outlined"
-                margin="normal"
-                required
-                fullWidth
-                // id="email"
-                label="Senha"
-                // name="email"
-                // autoComplete="email"
-                autoFocus
-                onChange={(event) => null}
-                InputProps={{
-                  startAdornment: <InputAdornment position="end"><VpnKeyIcon /></InputAdornment>,
-                }}
-              />
-            </FormControl> */}
           </Grid>
         </Grid>
         <Button
@@ -259,6 +247,7 @@ export default function SupermarketRegister() {
           variant="contained"
           color="secondary"
           className={classes.submit}
+          onClick={register}
         >
           Cadastrar
           </Button>
