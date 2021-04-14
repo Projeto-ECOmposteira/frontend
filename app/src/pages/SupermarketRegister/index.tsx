@@ -10,22 +10,25 @@ import InputLabel from '@material-ui/core/InputLabel';
 import Select from '@material-ui/core/Select';
 import InputAdornment from '@material-ui/core/InputAdornment';
 import PersonIcon from '@material-ui/icons/Person';
-import VpnKeyIcon from '@material-ui/icons/VpnKey';
 import OutlinedInput from '@material-ui/core/OutlinedInput';
+import Link from "@material-ui/core/Link";
+import Visibility from '@material-ui/icons/Visibility';
+import VisibilityOff from '@material-ui/icons/VisibilityOff';
+import IconButton from '@material-ui/core/IconButton';
 
 export default function SupermarketRegister() {
   const classes = useStyles();
 
-  const [state, setState] = useState({ 
-    name: "", 
-    surname: "",
-    cellNumber: "",
-    comercialName: "",
-    CNPJ: "",
-    CEP: "",
-    comercialCellNumber: "",
-    tiedAgriculturalProducer: "",
-    eMail: "",
+  const [state, setState] = useState({
+    first_name: "",
+    last_name: "",
+    owner_phone_number: "",
+    comercial_name: "",
+    cnpj: "",
+    cep: "",
+    phone_number: "",
+    producer: "",
+    email: "",
     password: ""
   });
   const handleChange = (e: any) => {
@@ -36,7 +39,17 @@ export default function SupermarketRegister() {
     }));
   };
 
-  const register = () =>{
+  const [showPassword, setShowPassword] = useState(false)
+  
+  const handleClickShowPassword = () => {
+    setShowPassword(!showPassword);
+  };
+
+  const handleMouseDownPassword = (event: any) => {
+    event.preventDefault();
+  };
+  
+  const register = () => {
     console.log(state)
   }
 
@@ -65,9 +78,9 @@ export default function SupermarketRegister() {
                 margin="normal"
                 required
                 fullWidth
-                id="name"
+                id="first_name"
                 label="Nome"
-                name="name"
+                name="first_name"
                 autoComplete="given-name"
                 autoFocus
                 onChange={handleChange}
@@ -79,11 +92,10 @@ export default function SupermarketRegister() {
                 margin="normal"
                 required
                 fullWidth
-                id="surname"
+                id="last_name"
                 label="Sobrenome"
-                name="surname"
+                name="last_name"
                 autoComplete="family-name"
-                autoFocus
                 onChange={handleChange}
               />
             </Grid>
@@ -93,11 +105,10 @@ export default function SupermarketRegister() {
                 margin="normal"
                 required
                 fullWidth
-                id="cellNumber"
+                id="owner_phone_number"
                 label="Telefone"
-                name="cellNumber"
+                name="owner_phone_number"
                 autoComplete="tel-national"
-                autoFocus
                 onChange={handleChange}
               />
             </Grid>
@@ -116,11 +127,10 @@ export default function SupermarketRegister() {
                 margin="normal"
                 required
                 fullWidth
-                id="comercialName"
+                id="comercial_name"
                 label="Nome comercial"
-                name="comercialName"
+                name="comercial_name"
                 autoComplete="organization"
-                autoFocus
                 onChange={handleChange}
               />
             </Grid>
@@ -130,10 +140,9 @@ export default function SupermarketRegister() {
                 margin="normal"
                 required
                 fullWidth
-                id="CNPJ"
+                id="cnpj"
                 label="CNPJ"
-                name="CNPJ"
-                autoFocus
+                name="cnpj"
                 onChange={handleChange}
               />
             </Grid>
@@ -151,11 +160,10 @@ export default function SupermarketRegister() {
                 margin="normal"
                 required
                 fullWidth
-                id="CEP"
+                id="cep"
                 label="CEP"
-                name="CEP"
+                name="cep"
                 autoComplete="postal-code"
-                autoFocus
                 onChange={handleChange}
               />
             </Grid>
@@ -165,11 +173,10 @@ export default function SupermarketRegister() {
                 margin="normal"
                 required
                 fullWidth
-                id="comercialCellNumber"
+                id="phone_number"
                 label="Telefone"
-                name="comercialCellNumber"
+                name="phone_number"
                 autoComplete="tel-national"
-                autoFocus
                 onChange={handleChange}
               />
             </Grid>
@@ -189,8 +196,8 @@ export default function SupermarketRegister() {
                   native
                   onChange={handleChange}
                   label="Produtor agrícola vinculado *"
-                  id="tiedAgriculturalProducer"
-                  name="tiedAgriculturalProducer"
+                  id="producer"
+                  name="producer"
                 >
                   <option aria-label="None" value="" />
                   <option value={1}>José</option>
@@ -214,8 +221,8 @@ export default function SupermarketRegister() {
               <InputLabel htmlFor="outlined-adornment-password">E-mail *</InputLabel>
               <OutlinedInput
                 required
-                id="eMail"
-                name="eMail"
+                id="email"
+                name="email"
                 autoComplete="email"
                 onChange={handleChange}
                 endAdornment={
@@ -233,24 +240,48 @@ export default function SupermarketRegister() {
                 id="password"
                 name="password"
                 onChange={handleChange}
+                type={showPassword ? 'text' : 'password'}
                 endAdornment={
-                  <InputAdornment position="end"><VpnKeyIcon /></InputAdornment>
+                  <InputAdornment position="end">
+                    <IconButton
+                      aria-label="toggle password visibility"
+                      onClick={handleClickShowPassword}
+                      onMouseDown={handleMouseDownPassword}
+                    >
+                      {showPassword ? <Visibility /> : <VisibilityOff />}
+                    </IconButton>
+                  </InputAdornment>
                 }
                 labelWidth={70}
               />
             </FormControl>
           </Grid>
         </Grid>
-        <Button
-          type="submit"
-          fullWidth
-          variant="contained"
-          color="secondary"
-          className={classes.submit}
-          onClick={register}
+        <Grid
+          container
+          direction="row"
+          justify="center"
+          alignItems="center"
+          spacing={5}
         >
-          Cadastrar
+          <Grid item xs={6}>
+            <Link href="/" variant="body2">
+              Faça login em vez disso
+              </Link>
+          </Grid>
+          <Grid item xs={6}>
+            <Button
+              type="submit"
+              fullWidth
+              variant="contained"
+              color="secondary"
+              className={classes.submit}
+              onClick={register}
+            >
+              Cadastrar
           </Button>
+          </Grid>
+        </Grid>
       </div>
     </Container>
   );
