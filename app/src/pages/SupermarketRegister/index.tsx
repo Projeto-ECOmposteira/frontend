@@ -15,6 +15,7 @@ import Link from "@material-ui/core/Link";
 import Visibility from '@material-ui/icons/Visibility';
 import VisibilityOff from '@material-ui/icons/VisibilityOff';
 import IconButton from '@material-ui/core/IconButton';
+import axios from 'axios';
 
 export default function SupermarketRegister() {
   const classes = useStyles();
@@ -40,7 +41,7 @@ export default function SupermarketRegister() {
   };
 
   const [showPassword, setShowPassword] = useState(false)
-  
+
   const handleClickShowPassword = () => {
     setShowPassword(!showPassword);
   };
@@ -48,9 +49,19 @@ export default function SupermarketRegister() {
   const handleMouseDownPassword = (event: any) => {
     event.preventDefault();
   };
-  
+
   const register = () => {
-    console.log(state)
+    let url = `${process.env["REACT_APP_API_GATEWAY_BASE_URL"]}/api/register/`
+    axios.post(url, {
+      ...state,
+      'password2': state.password,
+    })
+      .then(function (response: any) {
+        // Redireciona pra tela de OK
+      })
+      .catch(function (error: any) {
+        // Mostra na tela que deu erro
+      });
   }
 
   return (
