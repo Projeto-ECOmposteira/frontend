@@ -16,6 +16,8 @@ import Visibility from '@material-ui/icons/Visibility';
 import VisibilityOff from '@material-ui/icons/VisibilityOff';
 import IconButton from '@material-ui/core/IconButton';
 import axios from 'axios';
+import { useSnackbar } from 'notistack';
+import { mask_cnpj, mask_only_one_name, mask_phone_number } from '../../utils/mask';
 
 export default function SupermarketRegister() {
   const classes = useStyles();
@@ -33,7 +35,16 @@ export default function SupermarketRegister() {
     password: ""
   });
   const handleChange = (e: any) => {
-    const { name, value } = e.target;
+    let { name, value } = e.target;
+    if (name === 'phone_number' || name === 'owner_phone_number'){
+      value = mask_phone_number(value)
+    }
+    else if (name === 'last_name' || name === 'first_name'){
+      value = mask_only_one_name(value)
+    }
+    else if (name === 'cnpj'){
+      value = mask_cnpj(value)
+    }
     setState(prevState => ({
       ...prevState,
       [name]: value
@@ -50,6 +61,8 @@ export default function SupermarketRegister() {
     event.preventDefault();
   };
 
+  const { enqueueSnackbar, closeSnackbar } = useSnackbar();
+
   const register = () => {
     let url = `${process.env["REACT_APP_API_GATEWAY_BASE_URL"]}/api/register/`
     axios.post(url, {
@@ -60,7 +73,20 @@ export default function SupermarketRegister() {
         // Redireciona pra tela de OK
       })
       .catch(function (error: any) {
-        // Mostra na tela que deu erro
+        if(!error.response){
+          const key = enqueueSnackbar('Erro de conexão.', { 
+            variant: 'error',
+            preventDuplicate: true,
+            onClick: () => { closeSnackbar(key) }
+          });
+        }
+        else{
+          const key = enqueueSnackbar('Erro ao cadastrar. E-mail já cadastrado.', { 
+            variant: 'error',
+            preventDuplicate: true,
+            onClick: () => { closeSnackbar(key) }
+          });
+        }
       });
   }
 
@@ -90,10 +116,11 @@ export default function SupermarketRegister() {
                 required
                 fullWidth
                 id="first_name"
-                label="Nome"
+                label="Primeiro Nome"
                 name="first_name"
                 autoComplete="given-name"
                 autoFocus
+                value={state.first_name}
                 onChange={handleChange}
               />
             </Grid>
@@ -104,9 +131,10 @@ export default function SupermarketRegister() {
                 required
                 fullWidth
                 id="last_name"
-                label="Sobrenome"
+                label="Último Nome"
                 name="last_name"
                 autoComplete="family-name"
+                value={state.last_name}
                 onChange={handleChange}
               />
             </Grid>
@@ -120,6 +148,7 @@ export default function SupermarketRegister() {
                 label="Telefone"
                 name="owner_phone_number"
                 autoComplete="tel-national"
+                value={state.owner_phone_number}
                 onChange={handleChange}
               />
             </Grid>
@@ -142,6 +171,7 @@ export default function SupermarketRegister() {
                 label="Nome comercial"
                 name="comercial_name"
                 autoComplete="organization"
+                value={state.comercial_name}
                 onChange={handleChange}
               />
             </Grid>
@@ -154,6 +184,7 @@ export default function SupermarketRegister() {
                 id="cnpj"
                 label="CNPJ"
                 name="cnpj"
+                value={state.cnpj}
                 onChange={handleChange}
               />
             </Grid>
@@ -188,6 +219,7 @@ export default function SupermarketRegister() {
                 label="Telefone"
                 name="phone_number"
                 autoComplete="tel-national"
+                value={state.phone_number}
                 onChange={handleChange}
               />
             </Grid>
