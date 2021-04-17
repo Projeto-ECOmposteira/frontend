@@ -19,8 +19,11 @@ import axios from 'axios';
 import { useSnackbar } from 'notistack';
 import { mask_cep, mask_cnpj, mask_email, mask_only_one_name, mask_phone_number } from '../../utils/mask';
 import { useForm } from "react-hook-form";
+import { useHistory } from "react-router-dom";
 
 export default function SupermarketRegister() {
+  let history = useHistory();
+
   const classes = useStyles();
 
   const [state, setState] = useState({
@@ -114,8 +117,8 @@ export default function SupermarketRegister() {
       ...data,
       'password2': state.password,
     })
-      .then(function (response: any) {
-        // Redireciona pra tela de OK
+      .then(function () {
+        return history.push('success')
       })
       .catch(function (error: any) {
         if (!error.response) {
