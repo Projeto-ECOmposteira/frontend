@@ -87,7 +87,9 @@ export default function SupermarketRegister() {
     register("producer", {
       pattern: /^(\d)+$/i
     })
-    register("email")
+    register("email", {
+      pattern: /^(.+)@(.+)\.(.+)$/i
+    })
     register("password", {
       minLength: {
         value: 8,
@@ -333,7 +335,7 @@ export default function SupermarketRegister() {
                   }
                   labelWidth={70}
                 />
-                {emailError && "E-mail inválido ou em uso"}
+                {(emailError || errors.email) && "E-mail inválido ou em uso"}
               </FormControl>
             </Grid>
             <Grid item xs={6}>
