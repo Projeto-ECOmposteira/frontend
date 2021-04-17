@@ -17,7 +17,7 @@ import VisibilityOff from '@material-ui/icons/VisibilityOff';
 import IconButton from '@material-ui/core/IconButton';
 import axios from 'axios';
 import { useSnackbar } from 'notistack';
-import { mask_cep, mask_cnpj, mask_only_one_name, mask_phone_number } from '../../utils/mask';
+import { mask_cep, mask_cnpj, mask_email, mask_only_one_name, mask_phone_number } from '../../utils/mask';
 
 export default function SupermarketRegister() {
   const classes = useStyles();
@@ -47,6 +47,9 @@ export default function SupermarketRegister() {
     }
     else if (name === 'cep'){
       value = mask_cep(value)
+    }
+    else if (name == 'email'){
+      value = mask_email(value)
     }
     setState(prevState => ({
       ...prevState,
@@ -272,6 +275,7 @@ export default function SupermarketRegister() {
                 name="email"
                 autoComplete="email"
                 onChange={handleChange}
+                value={state.email}
                 endAdornment={
                   <InputAdornment position="end"><PersonIcon /></InputAdornment>
                 }

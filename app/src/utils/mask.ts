@@ -48,3 +48,8 @@ export function mask_cep(cep: string): string{
 
     return new_str;
 }
+
+export function mask_email(email: string): string{
+    var new_str = email.replace(/\s/g, "");
+    return new_str;
+}
