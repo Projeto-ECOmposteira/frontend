@@ -94,6 +94,7 @@ export default function SupermarketRegister() {
   }, [register]);
 
   const [showPassword, setShowPassword] = useState(false)
+  const [emailError, setEmailError] = useState(false)
 
   const handleClickShowPassword = () => {
     setShowPassword(!showPassword);
@@ -106,6 +107,8 @@ export default function SupermarketRegister() {
   const { enqueueSnackbar, closeSnackbar } = useSnackbar();
 
   const registerSupermarket = (data: any) => {
+    setEmailError(false)
+
     let url = `${process.env["REACT_APP_API_GATEWAY_BASE_URL"]}/api/register/`
     axios.post(url, {
       ...data,
@@ -121,14 +124,16 @@ export default function SupermarketRegister() {
             preventDuplicate: true,
             onClick: () => { closeSnackbar(key) }
           });
-        }
-        else {
-          const key = enqueueSnackbar('Erro ao cadastrar. E-mail já cadastrado.', {
+        } else if (error.response.data['email']) {
+          setEmailError(true)
+        } else {
+          const key = enqueueSnackbar('Erro interno do servidor.', {
             variant: 'error',
             preventDuplicate: true,
             onClick: () => { closeSnackbar(key) }
           });
         }
+
       });
   }
 
@@ -325,7 +330,7 @@ export default function SupermarketRegister() {
                   }
                   labelWidth={70}
                 />
-                {errors.email && "Campo e-mail inválido"}
+                {emailError && "E-mail inválido ou em uso"}
               </FormControl>
             </Grid>
             <Grid item xs={6}>
