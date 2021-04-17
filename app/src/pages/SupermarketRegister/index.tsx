@@ -17,7 +17,7 @@ import VisibilityOff from '@material-ui/icons/VisibilityOff';
 import IconButton from '@material-ui/core/IconButton';
 import axios from 'axios';
 import { useSnackbar } from 'notistack';
-import { mask_cnpj, mask_only_one_name, mask_phone_number } from '../../utils/mask';
+import { mask_cep, mask_cnpj, mask_only_one_name, mask_phone_number } from '../../utils/mask';
 
 export default function SupermarketRegister() {
   const classes = useStyles();
@@ -44,6 +44,9 @@ export default function SupermarketRegister() {
     }
     else if (name === 'cnpj'){
       value = mask_cnpj(value)
+    }
+    else if (name === 'cep'){
+      value = mask_cep(value)
     }
     setState(prevState => ({
       ...prevState,
@@ -206,6 +209,7 @@ export default function SupermarketRegister() {
                 label="CEP"
                 name="cep"
                 autoComplete="postal-code"
+                value={state.cep}
                 onChange={handleChange}
               />
             </Grid>

@@ -16,7 +16,7 @@ export function mask_phone_number(phone_number: string): string {
 export function mask_only_one_name(name: string): string{
     var new_str = name.replace(/\s/g, "");
     new_str = new_str.replace(/(?![a-zA-Z])\S/g, "");
-    return new_str
+    return new_str;
 }
 
 export function mask_cnpj(name: string): string{
@@ -34,5 +34,17 @@ export function mask_cnpj(name: string): string{
         new_str = new_str.replace(/^(\d*)/, "$1");
     }
 
-    return new_str
+    return new_str;
+}
+
+export function mask_cep(cep: string): string{
+    var new_str = cep.replace(/\D/g, "");
+
+    if (new_str.length > 5){
+        new_str = new_str.replace(/^(\d{5})(\d{1,3}).*/, "$1-$2");
+    } else {
+        new_str = new_str.replace(/^(\d*)/, "$1");
+    }
+
+    return new_str;
 }
