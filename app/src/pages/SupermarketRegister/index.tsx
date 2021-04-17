@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Button from "@material-ui/core/Button";
 import TextField from "@material-ui/core/TextField";
 import Grid from "@material-ui/core/Grid";
@@ -18,6 +18,7 @@ import IconButton from '@material-ui/core/IconButton';
 import axios from 'axios';
 import { useSnackbar } from 'notistack';
 import { mask_cep, mask_cnpj, mask_email, mask_only_one_name, mask_phone_number } from '../../utils/mask';
+import { useForm } from "react-hook-form";
 
 export default function SupermarketRegister() {
   const classes = useStyles();
@@ -36,26 +37,61 @@ export default function SupermarketRegister() {
   });
   const handleChange = (e: any) => {
     let { name, value } = e.target;
-    if (name === 'phone_number' || name === 'owner_phone_number'){
+    if (name === 'phone_number' || name === 'owner_phone_number') {
       value = mask_phone_number(value)
     }
-    else if (name === 'last_name' || name === 'first_name'){
+    else if (name === 'last_name' || name === 'first_name') {
       value = mask_only_one_name(value)
     }
-    else if (name === 'cnpj'){
+    else if (name === 'cnpj') {
       value = mask_cnpj(value)
     }
-    else if (name === 'cep'){
+    else if (name === 'cep') {
       value = mask_cep(value)
     }
-    else if (name == 'email'){
+    else if (name === 'email') {
       value = mask_email(value)
     }
+    setValue(name, value)
     setState(prevState => ({
       ...prevState,
       [name]: value
     }));
   };
+
+  const { register, formState: { errors }, handleSubmit, setValue } = useForm({ reValidateMode: 'onBlur' });
+
+  useEffect(() => {
+    register("first_name", {
+      pattern: /^[A-Za-z]+$/i
+    })
+    register("last_name", {
+      pattern: /^[A-Za-z]+$/i
+    })
+    register("owner_phone_number", {
+      pattern: /^\(\d{2}\)( \d | )(\d{4})-(\d{4})$/i
+    })
+    register("comercial_name")
+    register("cnpj", {
+      pattern: /^(\d{2}).(\d{3}).(\d{3})\/(\d{4})-(\d{2})$/i
+    })
+    register("cep", {
+      pattern: /^(\d{5})-(\d{3})$/i
+    })
+    register("phone_number", {
+      pattern: /^\(\d{2}\)( \d | )(\d{4})-(\d{4})$/i
+    })
+    register("producer", {
+      pattern: /^(\d)+$/i
+    })
+    register("email")
+    register("password", {
+      minLength: {
+        value: 8,
+        message: "Senha muito curta"
+      }
+    })
+  }, [register]);
 
   const [showPassword, setShowPassword] = useState(false)
 
@@ -69,25 +105,25 @@ export default function SupermarketRegister() {
 
   const { enqueueSnackbar, closeSnackbar } = useSnackbar();
 
-  const register = () => {
+  const registerSupermarket = (data: any) => {
     let url = `${process.env["REACT_APP_API_GATEWAY_BASE_URL"]}/api/register/`
     axios.post(url, {
-      ...state,
+      ...data,
       'password2': state.password,
     })
       .then(function (response: any) {
         // Redireciona pra tela de OK
       })
       .catch(function (error: any) {
-        if(!error.response){
-          const key = enqueueSnackbar('Erro de conexão.', { 
+        if (!error.response) {
+          const key = enqueueSnackbar('Erro de conexão.', {
             variant: 'error',
             preventDuplicate: true,
             onClick: () => { closeSnackbar(key) }
           });
         }
-        else{
-          const key = enqueueSnackbar('Erro ao cadastrar. E-mail já cadastrado.', { 
+        else {
+          const key = enqueueSnackbar('Erro ao cadastrar. E-mail já cadastrado.', {
             variant: 'error',
             preventDuplicate: true,
             onClick: () => { closeSnackbar(key) }
@@ -106,7 +142,7 @@ export default function SupermarketRegister() {
             alt="Projeto ECOmposteira"
           />
         </div>
-        <form className={classes.form} noValidate>
+        <form className={classes.form} onSubmit={handleSubmit(registerSupermarket)}>
           <h3>Informações do proprietário do supermercado</h3>
           <Grid
             container
@@ -129,6 +165,7 @@ export default function SupermarketRegister() {
                 value={state.first_name}
                 onChange={handleChange}
               />
+              {errors.first_name && "Campo primeiro nome inválido"}
             </Grid>
             <Grid item xs={3}>
               <TextField
@@ -143,6 +180,7 @@ export default function SupermarketRegister() {
                 value={state.last_name}
                 onChange={handleChange}
               />
+              {errors.first_name && "Campo ultimo nome inválido"}
             </Grid>
             <Grid item xs={6}>
               <TextField
@@ -157,6 +195,7 @@ export default function SupermarketRegister() {
                 value={state.owner_phone_number}
                 onChange={handleChange}
               />
+              {errors.owner_phone_number && "Campo telefone pessoal inválido"}
             </Grid>
           </Grid>
           <h3>Informações do supermercado</h3>
@@ -180,6 +219,7 @@ export default function SupermarketRegister() {
                 value={state.comercial_name}
                 onChange={handleChange}
               />
+              {errors.comercial_name && "Campo nome comercial inválido"}
             </Grid>
             <Grid item xs={6}>
               <TextField
@@ -193,6 +233,7 @@ export default function SupermarketRegister() {
                 value={state.cnpj}
                 onChange={handleChange}
               />
+              {errors.cnpj && "Campo CNPJ inválido"}
             </Grid>
           </Grid>
           <Grid
@@ -215,6 +256,7 @@ export default function SupermarketRegister() {
                 value={state.cep}
                 onChange={handleChange}
               />
+              {errors.cep && "Campo CEP inválido"}
             </Grid>
             <Grid item xs={6}>
               <TextField
@@ -229,6 +271,7 @@ export default function SupermarketRegister() {
                 value={state.phone_number}
                 onChange={handleChange}
               />
+              {errors.phone_number && "Campo telefone do supermercado inválido"}
             </Grid>
           </Grid>
           <Grid
@@ -254,85 +297,88 @@ export default function SupermarketRegister() {
                   <option value={2}>Antônio</option>
                   <option value={3}>Adriano</option>
                 </Select>
+                {errors.producer && "Campo produtor agrícula vinculado inválido"}
               </FormControl>
             </Grid>
           </Grid>
-        </form>
-        <h3>Informações de acesso</h3>
-        <Grid
-          container
-          direction="row"
-          justify="center"
-          alignItems="center"
-          spacing={5}
-        >
-          <Grid item xs={6}>
-            <FormControl variant="outlined" fullWidth>
-              <InputLabel htmlFor="outlined-adornment-password">E-mail *</InputLabel>
-              <OutlinedInput
-                required
-                id="email"
-                name="email"
-                autoComplete="email"
-                onChange={handleChange}
-                value={state.email}
-                endAdornment={
-                  <InputAdornment position="end"><PersonIcon /></InputAdornment>
-                }
-                labelWidth={70}
-              />
-            </FormControl>
+
+          <h3>Informações de acesso</h3>
+          <Grid
+            container
+            direction="row"
+            justify="center"
+            alignItems="center"
+            spacing={5}
+          >
+            <Grid item xs={6}>
+              <FormControl variant="outlined" fullWidth>
+                <InputLabel htmlFor="outlined-adornment-password">E-mail *</InputLabel>
+                <OutlinedInput
+                  required
+                  id="email"
+                  name="email"
+                  autoComplete="email"
+                  onChange={handleChange}
+                  value={state.email}
+                  endAdornment={
+                    <InputAdornment position="end"><PersonIcon /></InputAdornment>
+                  }
+                  labelWidth={70}
+                />
+                {errors.email && "Campo e-mail inválido"}
+              </FormControl>
+            </Grid>
+            <Grid item xs={6}>
+              <FormControl variant="outlined" fullWidth>
+                <InputLabel htmlFor="outlined-adornment-password">Senha *</InputLabel>
+                <OutlinedInput
+                  required
+                  id="password"
+                  name="password"
+                  onChange={handleChange}
+                  type={showPassword ? 'text' : 'password'}
+                  endAdornment={
+                    <InputAdornment position="end">
+                      <IconButton
+                        aria-label="toggle password visibility"
+                        onClick={handleClickShowPassword}
+                        onMouseDown={handleMouseDownPassword}
+                      >
+                        {showPassword ? <Visibility /> : <VisibilityOff />}
+                      </IconButton>
+                    </InputAdornment>
+                  }
+                  labelWidth={70}
+                />
+                {errors.password && "Campo senha inválido. Este campo deve conter no mínimo 8 caracteres."}
+              </FormControl>
+            </Grid>
           </Grid>
-          <Grid item xs={6}>
-            <FormControl variant="outlined" fullWidth>
-              <InputLabel htmlFor="outlined-adornment-password">Senha *</InputLabel>
-              <OutlinedInput
-                required
-                id="password"
-                name="password"
-                onChange={handleChange}
-                type={showPassword ? 'text' : 'password'}
-                endAdornment={
-                  <InputAdornment position="end">
-                    <IconButton
-                      aria-label="toggle password visibility"
-                      onClick={handleClickShowPassword}
-                      onMouseDown={handleMouseDownPassword}
-                    >
-                      {showPassword ? <Visibility /> : <VisibilityOff />}
-                    </IconButton>
-                  </InputAdornment>
-                }
-                labelWidth={70}
-              />
-            </FormControl>
-          </Grid>
-        </Grid>
-        <Grid
-          container
-          direction="row"
-          justify="center"
-          alignItems="center"
-          spacing={5}
-        >
-          <Grid item xs={6}>
-            <Link href="/" variant="body2">
-              Faça login em vez disso
+          <Grid
+            container
+            direction="row"
+            justify="center"
+            alignItems="center"
+            spacing={5}
+          >
+            <Grid item xs={6}>
+              <Link href="/" variant="body2">
+                Faça login em vez disso
               </Link>
-          </Grid>
-          <Grid item xs={6}>
-            <Button
-              type="submit"
-              fullWidth
-              variant="contained"
-              color="secondary"
-              className={classes.submit}
-              onClick={register}
-            >
-              Cadastrar
+            </Grid>
+            <Grid item xs={6}>
+              <Button
+                type="submit"
+                fullWidth
+                variant="contained"
+                color="secondary"
+                className={classes.submit}
+              >
+                Cadastrar
           </Button>
+            </Grid>
           </Grid>
-        </Grid>
+        </form>
       </div>
     </Container>
   );
