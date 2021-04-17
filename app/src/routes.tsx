@@ -1,6 +1,8 @@
 import { Switch, Route } from "react-router-dom";
 import SignIn from "./pages/SignIn";
 import Home from "./pages/Home";
+import SupermarketRegister from "./pages/SupermarketRegister";
+import SupermarketRegisterSuccess from "./pages/SupermarketRegisterSuccess";
 import { useContext } from "react";
 import AuthContext from "./contexts/auth";
 
@@ -16,6 +18,8 @@ export default function Routes() {
       ) : (
         <Route path="/" exact component={SignIn} />
       )}
+      <Route path="/cadastrar_supermercado" exact component={SupermarketRegister} />
+      <Route path="/cadastrar_supermercado/success" exact component={SupermarketRegisterSuccess} />
     </Switch>
   );
 }

@@ -2,6 +2,7 @@ import CssBaseline from "@material-ui/core/CssBaseline";
 import { createMuiTheme, ThemeProvider } from "@material-ui/core/styles";
 import { AuthProvider } from "../contexts/auth";
 import Routes from "../routes";
+import { SnackbarProvider } from 'notistack';
 
 const theme = createMuiTheme({
   palette: {
@@ -14,12 +15,14 @@ const theme = createMuiTheme({
 
 function App() {
   return (
-    <AuthProvider>
-      <ThemeProvider theme={theme}>
-        <CssBaseline />
-        <Routes />
-      </ThemeProvider>
-    </AuthProvider>
+    <SnackbarProvider maxSnack={3}>
+      <AuthProvider>
+        <ThemeProvider theme={theme}>
+          <CssBaseline />
+          <Routes />
+        </ThemeProvider>
+      </AuthProvider>
+    </SnackbarProvider>
   );
 }
 
