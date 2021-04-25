@@ -14,6 +14,10 @@ const useStyles = makeStyles((theme) => ({
   submit: {
     margin: theme.spacing(3, 0, 2),
   },
+  paragraph: {
+    fontSize: "24px",
+    textAlign: "justify",
+  },
 }));
 
 export { useStyles };

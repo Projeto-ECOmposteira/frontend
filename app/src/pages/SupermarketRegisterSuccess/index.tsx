@@ -22,7 +22,7 @@ export default function SupermarketRegisterSuccess() {
               alt="Projeto ECOmposteira"
             />
           </div>
-          <h2>Informações do proprietário do supermercado</h2>
+          <p className={classes.paragraph}>Cadastro concluído com sucesso!</p>
           <Button
             type="submit"
             fullWidth
