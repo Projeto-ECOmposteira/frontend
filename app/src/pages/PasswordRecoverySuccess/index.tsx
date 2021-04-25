@@ -7,7 +7,7 @@ import { useStyles } from "./styles";
 export default function PasswordRecoverySuccess() {
   const classes = useStyles();
   return (
-    <Container>
+    <Container component="main" maxWidth="xs">
       <Grid
         container
         direction="row"
@@ -22,7 +22,7 @@ export default function PasswordRecoverySuccess() {
               alt="Projeto ECOmposteira"
             />
           </div>
-          <p className={classes.paragraph}>E-mail enviado com sucesso</p>
+          <p className={classes.paragraph}>Caso exista uma conta com este e-email ele irá receber instruções para recuperar a senha em breve.</p>
           <Button
             type="submit"
             fullWidth

@@ -47,7 +47,7 @@ export default function PasswordRecovery() {
   const { enqueueSnackbar, closeSnackbar } = useSnackbar();
 
   const recoveryPassword = (data: any) => {
-    let url = `${process.env["REACT_APP_API_GATEWAY_BASE_URL"]}/api/recovery_password/`
+    let url = `${process.env["REACT_APP_API_GATEWAY_BASE_URL"]}/api/password_recovery/`
     axios.post(url, {
       ...data,
     })
