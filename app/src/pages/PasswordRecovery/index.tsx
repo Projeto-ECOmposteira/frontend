@@ -47,13 +47,12 @@ export default function PasswordRecovery() {
   const { enqueueSnackbar, closeSnackbar } = useSnackbar();
 
   const recoveryPassword = (data: any) => {
-    return history.push('/esqueceu_senha/success')
     let url = `${process.env["REACT_APP_API_GATEWAY_BASE_URL"]}/api/recovery_password/`
     axios.post(url, {
       ...data,
     })
       .then(function () {
-        return history.push('success')
+        return history.push('/esqueceu_senha/success')
       })
       .catch(function (error: any) {
         if (!error.response) {
