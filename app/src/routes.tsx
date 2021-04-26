@@ -7,6 +7,8 @@ import { useContext } from "react";
 import AuthContext from "./contexts/auth";
 import PasswordRecovery from "./pages/PasswordRecovery";
 import PasswordRecoverySuccess from "./pages/PasswordRecoverySuccess";
+import PasswordRecoveryReset from "./pages/PasswordRecoveryReset";
+import PasswordRecoveryResetSuccess from "./pages/PasswordRecoveryResetSuccess";
 
 // TODO: criar pasta "routes" com dois componentes: 
 // rotas autenticadas e rotas não autenticadas
@@ -24,6 +26,8 @@ export default function Routes() {
       <Route path="/cadastrar_supermercado/success" exact component={SupermarketRegisterSuccess} />
       <Route path="/esqueceu_senha" exact component={PasswordRecovery} />
       <Route path="/esqueceu_senha/success" exact component={PasswordRecoverySuccess} />
+      <Route path="/esqueceu_senha/reset/:user/:token" exact component={PasswordRecoveryReset} />
+      <Route path="/esqueceu_senha/reset/success" exact component={PasswordRecoveryResetSuccess} />
     </Switch>
   );
 }
