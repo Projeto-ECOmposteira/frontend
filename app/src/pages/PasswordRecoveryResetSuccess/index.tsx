@@ -17,11 +17,39 @@ import { useForm } from "react-hook-form";
 import { useHistory, useParams } from "react-router-dom";
 import Link from "@material-ui/core/Link";
 import IconButton from '@material-ui/core/IconButton';
+import SuccessRegister from "../../assets/img/successRegister.svg";
 
 export default function PasswordRecoveryReset() {
+  const classes = useStyles();
   return (
-    <Container component="main" maxWidth="xs">
-      <p>Deu bom familia!</p>
+    <Container>
+      <Grid
+        container
+        direction="row"
+        justify="center"
+        alignItems="center"
+        spacing={5}
+      >
+        <div className={classes.container}>
+          <div className={classes.logoContainer}>
+            <img
+              src={SuccessRegister}
+              alt="Projeto ECOmposteira"
+            />
+          </div>
+          <p className={classes.paragraph}>Senha alterada com sucesso! Você pode seguir em frente e fazer login agora.</p>
+          <Button
+            type="submit"
+            fullWidth
+            variant="contained"
+            color="secondary"
+            className={classes.submit}
+            href="/"
+          >
+            IR PARA TELA DE LOGIN
+          </Button>
+        </div>
+      </Grid>
     </Container>
   );
 }
