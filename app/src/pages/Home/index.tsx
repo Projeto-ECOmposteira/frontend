@@ -1,14 +1,37 @@
 import React from "react";
 import Container from "@material-ui/core/Container";
 import { useStyles } from "./styles";
+import Modal from '@material-ui/core/Modal';
+import CreateComposterModal from '../CreateComposterModal'
 
 // TODO
 export default function SignIn() {
   const classes = useStyles();
 
+  const [open, setOpen] = React.useState(false);
+
+  const handleOpen = () => {
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
+
   return (
     <Container  component="main">
       <h1 className={classes.header}>Homepage</h1>
+      <button type="button" onClick={handleOpen}>
+        Cadastrar composteira
+      </button>
+      <Modal
+        open={open}
+        onClose={handleClose}
+        aria-labelledby="simple-modal-title"
+        aria-describedby="simple-modal-description"
+      >
+        <CreateComposterModal closeEvent={handleClose} />
+      </Modal>
     </Container>
   );
 }
