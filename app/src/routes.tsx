@@ -14,7 +14,7 @@ export default function Routes() {
   return (
     <Switch>
       {signed ? (
-        <Route path="/home" component={Home} />
+        <Route path="/" exact component={Home} />
       ) : (
         <Route path="/" exact component={SignIn} />
       )}
