@@ -53,3 +53,23 @@ export function mask_email(email: string): string {
     var new_str = email.replace(/\s/g, "");
     return new_str;
 }
+
+export function mask_mac_address(mac_address: string): string {
+    var new_str = mac_address.replace(/[^0-9a-fA-f]*/g, "");
+
+    if (new_str.length > 10) {
+        new_str = new_str.replace(/^([0-9a-fA-F]{2})([0-9a-fA-F]{2})([0-9a-fA-F]{2})([0-9a-fA-F]{2})([0-9a-fA-F]{2})([0-9a-fA-F]{1,2}).*/, "$1:$2:$3:$4:$5:$6");
+    } else if (new_str.length > 8){
+        new_str = new_str.replace(/^([0-9a-fA-F]{2})([0-9a-fA-F]{2})([0-9a-fA-F]{2})([0-9a-fA-F]{2})([0-9a-fA-F]{1,2})*/, "$1:$2:$3:$4:$5");
+    } else if (new_str.length > 6){
+        new_str = new_str.replace(/^([0-9a-fA-F]{2})([0-9a-fA-F]{2})([0-9a-fA-F]{2})([0-9a-fA-F]{1,2})*/, "$1:$2:$3:$4");
+    } else if (new_str.length > 4){
+        new_str = new_str.replace(/^([0-9a-fA-F]{2})([0-9a-fA-F]{2})([0-9a-fA-F]{1,2})*/, "$1:$2:$3");
+    } else if (new_str.length > 2){
+        new_str = new_str.replace(/^([0-9a-fA-F]{2})([0-9a-fA-F]{1,2})*/, "$1:$2");
+    } else {
+        new_str = new_str.replace(/^([0-9a-fA-F]*)/, "$1");
+    }
+
+    return new_str.toUpperCase();
+}
