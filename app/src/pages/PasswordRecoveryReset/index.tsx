@@ -62,6 +62,14 @@ export default function PasswordRecoveryReset() {
   const { enqueueSnackbar, closeSnackbar } = useSnackbar();
 
   const recoveryPassword = (data: any) => {
+    if(data.new_password1 != data.new_password2){
+      const key = enqueueSnackbar('As senhas não coincidem.', {
+        variant: 'error',
+        preventDuplicate: true,
+        onClick: () => { closeSnackbar(key) }
+      });
+      return;
+    }
     let url = `${process.env["REACT_APP_API_GATEWAY_BASE_URL"]}/api/password_recovery/reset/${user}/${token}/`
     axios.post(url, {
       ...data,
