@@ -61,7 +61,7 @@ export default function PasswordRecoveryReset() {
   const { enqueueSnackbar, closeSnackbar } = useSnackbar();
 
   const recoveryPassword = (data: any) => {
-    if(data.new_password1 != data.new_password2){
+    if(data.new_password1 !== data.new_password2){
       const key = enqueueSnackbar('As senhas não coincidem.', {
         variant: 'error',
         preventDuplicate: true,
@@ -141,6 +141,7 @@ export default function PasswordRecoveryReset() {
                   id="new_password1"
                   name="new_password1"
                   onChange={handleChange}
+                  value={state.new_password1}
                   type={showPassword ? 'text' : 'password'}
                   endAdornment={
                     <InputAdornment position="end">
@@ -166,6 +167,7 @@ export default function PasswordRecoveryReset() {
                   id="new_password2"
                   name="new_password2"
                   onChange={handleChange}
+                  value={state.new_password2}
                   type={showPassword2 ? 'text' : 'password'}
                   endAdornment={
                     <InputAdornment position="end">
