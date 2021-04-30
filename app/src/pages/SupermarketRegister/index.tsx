@@ -34,7 +34,7 @@ export default function SupermarketRegister() {
     cnpj: "",
     cep: "",
     phone_number: "",
-    producer: "",
+    agricultural_producer: "",
     email: "",
     password: ""
   });
@@ -84,7 +84,7 @@ export default function SupermarketRegister() {
     register("phone_number", {
       pattern: /^\(\d{2}\)( \d | )(\d{4})-(\d{4})$/i
     })
-    register("producer", {
+    register("agricultural_producer", {
       pattern: /^(\d)+$/i
     })
     register("email", {
@@ -299,15 +299,15 @@ export default function SupermarketRegister() {
                   native
                   onChange={handleChange}
                   label="Produtor agrícola vinculado *"
-                  id="producer"
-                  name="producer"
+                  id="agricultural_producer"
+                  name="agricultural_producer"
                 >
                   <option aria-label="None" value="" />
                   <option value={1}>José</option>
                   <option value={2}>Antônio</option>
                   <option value={3}>Adriano</option>
                 </Select>
-                {errors.producer && "Campo produtor agrícula vinculado inválido"}
+                {errors.agricultural_producer && "Campo produtor agrícula vinculado inválido"}
               </FormControl>
             </Grid>
           </Grid>
