@@ -120,7 +120,7 @@ export default function SupermarketRegister() {
       'password2': state.password,
     })
       .then(function () {
-        return history.push('success')
+        return history.push('/cadastrar_supermercado/success')
       })
       .catch(function (error: any) {
         if (!error.response) {

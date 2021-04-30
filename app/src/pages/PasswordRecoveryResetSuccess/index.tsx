@@ -1,10 +1,10 @@
-import { Container } from "@material-ui/core";
-import SuccessRegister from "../../assets/img/successRegister.svg";
 import Button from "@material-ui/core/Button";
 import Grid from "@material-ui/core/Grid";
+import Container from "@material-ui/core/Container";
 import { useStyles } from "./styles";
+import SuccessRegister from "../../assets/img/successRegister.svg";
 
-export default function SupermarketRegisterSuccess() {
+export default function PasswordRecoveryReset() {
   const classes = useStyles();
   return (
     <Container>
@@ -22,7 +22,7 @@ export default function SupermarketRegisterSuccess() {
               alt="Projeto ECOmposteira"
             />
           </div>
-          <p className={classes.paragraph}>Cadastro concluído com sucesso!</p>
+          <p className={classes.paragraph}>Senha alterada com sucesso! Você pode seguir em frente e fazer login agora.</p>
           <Button
             type="submit"
             fullWidth

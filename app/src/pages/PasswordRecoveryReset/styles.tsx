@@ -5,18 +5,25 @@ const useStyles = makeStyles((theme) => ({
     marginTop: theme.spacing(8),
     display: "flex",
     flexDirection: "column",
-    alignItems: "center",
   },
   logoContainer: {
     margin: theme.spacing(1),
     alignSelf: "center",
   },
+  logo: {
+    height: "96px",
+    width: "96px",
+  },
+  paragraph: {
+    fontSize: "16px",
+    textAlign: "justify",
+  },
   submit: {
     margin: theme.spacing(3, 0, 2),
   },
-  paragraph: {
-    fontSize: "24px",
-    textAlign: "justify",
+  form: {
+    width: "100%", // Fix IE 11 issue.
+    marginTop: theme.spacing(1),
   },
 }));
 
