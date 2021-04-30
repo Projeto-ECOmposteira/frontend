@@ -12,7 +12,6 @@ import VisibilityOff from '@material-ui/icons/VisibilityOff';
 import OutlinedInput from '@material-ui/core/OutlinedInput';
 import axios from 'axios';
 import { useSnackbar } from 'notistack';
-import { mask_email } from '../../utils/mask';
 import { useForm } from "react-hook-form";
 import { useHistory, useParams } from "react-router-dom";
 import Link from "@material-ui/core/Link";
