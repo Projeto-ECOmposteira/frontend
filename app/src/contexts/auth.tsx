@@ -1,6 +1,6 @@
-import { AsyncLocalStorage } from "node:async_hooks";
 import React, { createContext, useEffect, useState } from "react";
 import * as auth from "../services/auth";
+import api from "../services/api";
 
 interface AuthContextData {
   signed: boolean;
@@ -21,6 +21,7 @@ export const AuthProvider: React.FC = ({ children }) => {
 
       if (storagedUser && storagedToken) {
         setUser(JSON.parse(storagedUser));
+        api.defaults.headers.Authorization = `Baerer ${storagedToken}`;
       }
     }
 
@@ -30,6 +31,8 @@ export const AuthProvider: React.FC = ({ children }) => {
   async function signIn() {
     const response = await auth.signIn();
     setUser(response.user);
+
+    api.defaults.headers.Authorization = `Baerer ${response.token}`;
 
     localStorage.setItem('@RAuth:user', JSON.stringify(response.user));
     localStorage.setItem('@RAuth:token', response.token);
