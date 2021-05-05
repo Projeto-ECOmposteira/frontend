@@ -9,7 +9,7 @@ import MenuItem from "@material-ui/core/MenuItem";
 import Menu from "@material-ui/core/Menu";
 import Avatar from "@material-ui/core/Avatar";
 import { Button } from "@material-ui/core";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import LogoImage from "../../assets/img/logo.svg";
 import AuthContext from "../../contexts/auth";
 
@@ -67,6 +67,7 @@ const useStyles = makeStyles((theme: Theme) =>
 );
 
 export default function MenuAppBar() {
+  const history = useHistory();
   const { signOut } = useContext(AuthContext);
   const classes = useStyles();
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
@@ -82,6 +83,7 @@ export default function MenuAppBar() {
 
   const handleSignOut = () => {
     signOut();
+    history.push('/');
   };
 
   return (
