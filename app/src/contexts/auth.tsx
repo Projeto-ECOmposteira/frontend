@@ -1,10 +1,11 @@
 import React, { createContext, useEffect, useState } from "react";
 import * as auth from "../services/auth";
 import api from "../services/api";
+import { User } from "../types/types";
 
 interface AuthContextData {
   signed: boolean;
-  user: Object | null;
+  user: User | null;
   signIn(): Promise<void>;
   signOut(): void;
 }
@@ -12,7 +13,7 @@ interface AuthContextData {
 const AuthContext = createContext<AuthContextData>({} as AuthContextData);
 
 export const AuthProvider: React.FC = ({ children }) => {
-  const [user, setUser] = useState<Object | null>(null);
+  const [user, setUser] = useState<User | null>(null);
 
   useEffect(() => {
     async function loadStorageData() {
@@ -30,11 +31,11 @@ export const AuthProvider: React.FC = ({ children }) => {
 
   async function signIn() {
     const response = await auth.signIn();
-    setUser(response.user);
+    setUser(response);
 
     api.defaults.headers.Authorization = `Baerer ${response.token}`;
 
-    localStorage.setItem('@RAuth:user', JSON.stringify(response.user));
+    localStorage.setItem('@RAuth:user', JSON.stringify(response));
     localStorage.setItem('@RAuth:token', response.token);
   }
 

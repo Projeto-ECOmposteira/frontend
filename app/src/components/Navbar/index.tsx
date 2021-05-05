@@ -12,6 +12,7 @@ import { Button } from "@material-ui/core";
 import { Link, useHistory } from "react-router-dom";
 import LogoImage from "../../assets/img/logo.svg";
 import AuthContext from "../../contexts/auth";
+import { getUsernameInitialsLetters } from "../../utils/userDataTransform";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -66,9 +67,9 @@ const useStyles = makeStyles((theme: Theme) =>
   })
 );
 
-export default function MenuAppBar() {
+export default function Navbar() {
   const history = useHistory();
-  const { signOut } = useContext(AuthContext);
+  const { user, signOut } = useContext(AuthContext);
   const classes = useStyles();
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
@@ -119,7 +120,7 @@ export default function MenuAppBar() {
                 color="secondary"
                 className={classes.userRole}
               >
-                Produtor agrícola
+                {user?.data?.isSupermarket === true ? "Supermercado" : "Produtor agrícola"}
               </Typography>
               <Typography
                 component="h4"
@@ -127,7 +128,7 @@ export default function MenuAppBar() {
                 color="secondary"
                 className={classes.username}
               >
-                Welison Almeida
+                {user?.data?.name || "Sem nome" }
               </Typography>
             </div>
             <IconButton
@@ -138,8 +139,8 @@ export default function MenuAppBar() {
               color="inherit"
               className={classes.logout}
             >
-              <Avatar className={classes.avatar} alt="Welison Almeida">
-                WA
+              <Avatar className={classes.avatar} alt="Username abbreviation">
+                {getUsernameInitialsLetters(user?.data?.name || "Sem nome")}
               </Avatar>
             </IconButton>
             <Menu
