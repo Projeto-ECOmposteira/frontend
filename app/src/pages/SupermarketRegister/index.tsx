@@ -121,7 +121,7 @@ export default function SupermarketRegister() {
         }
 
       });
-  }, [register]);
+  }, [register]); // eslint-disable-line react-hooks/exhaustive-deps
 
   const [showPassword, setShowPassword] = useState(false)
   const [emailError, setEmailError] = useState(false)
