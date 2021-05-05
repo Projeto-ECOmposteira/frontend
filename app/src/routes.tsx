@@ -4,6 +4,7 @@ import Navbar from "./components/Navbar";
 import InternalRoutes from "./routes/InternalRoutes";
 import ExternalRoutes from "./routes/ExternalRoutes";
 
+
 export default function Routes() {
   const { signed } = useContext(AuthContext);
 
@@ -18,5 +19,5 @@ export default function Routes() {
         <ExternalRoutes />
       )}
     </>
-  )
+  );
 }

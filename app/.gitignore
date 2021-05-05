@@ -23,4 +23,7 @@ yarn-debug.log*
 yarn-error.log*
 
 # ignore secrets
-.env
+**.env
+
+# ignore package-lock.josn
+package-lock.json
