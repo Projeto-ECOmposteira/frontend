@@ -64,6 +64,8 @@ export default function SupermarketRegister() {
 
   const { register, formState: { errors }, handleSubmit, setValue } = useForm({ reValidateMode: 'onBlur' });
 
+  const [producers, setProducers] = useState(new Map());
+
   useEffect(() => {
     register("first_name", {
       pattern: /^[A-Za-z]+$/i
@@ -96,6 +98,29 @@ export default function SupermarketRegister() {
         message: "Senha muito curta"
       }
     })
+    let url = `${process.env["REACT_APP_API_GATEWAY_BASE_URL"]}/api/producers/`
+    axios.get(url)
+      .then(function (response: any) {
+        for (let i in response.data) {
+          setProducers(new Map(producers.set(response.data[i].pk, response.data[i].first_name + ' ' + response.data[i].last_name)));
+        }
+      })
+      .catch(function (error: any) {
+        if (!error.response) {
+          const key = enqueueSnackbar('Erro de conexão.', {
+            variant: 'error',
+            preventDuplicate: true,
+            onClick: () => { closeSnackbar(key) }
+          });
+        } else {
+          const key = enqueueSnackbar('Erro interno do servidor.', {
+            variant: 'error',
+            preventDuplicate: true,
+            onClick: () => { closeSnackbar(key) }
+          });
+        }
+
+      });
   }, [register]);
 
   const [showPassword, setShowPassword] = useState(false)
@@ -140,6 +165,14 @@ export default function SupermarketRegister() {
         }
 
       });
+  }
+
+  function getProducers() {
+    const prods: any = [];
+    producers.forEach((value: string, key: string) => {
+      prods.push(<option key={key} value={key}>{value}</option>)
+    });
+    return prods;
   }
 
   return (
@@ -303,9 +336,7 @@ export default function SupermarketRegister() {
                   name="agricultural_producer"
                 >
                   <option aria-label="None" value="" />
-                  <option value={1}>José</option>
-                  <option value={2}>Antônio</option>
-                  <option value={3}>Adriano</option>
+                  {getProducers()}
                 </Select>
                 {errors.agricultural_producer && "Campo produtor agrícula vinculado inválido"}
               </FormControl>
