@@ -1,8 +1,7 @@
-import { useContext } from "react";
+import React, { useContext } from "react";
 import AuthContext from "./contexts/auth";
-import Navbar from "./components/Navbar";
-import InternalRoutes from "./routes/InternalRoutes";
 import ExternalRoutes from "./routes/ExternalRoutes";
+import Dashboard from "./pages/Dashboard";
 
 
 export default function Routes() {
@@ -11,10 +10,7 @@ export default function Routes() {
   return (
     <>
       {signed ? (
-        <>
-          <Navbar />
-          <InternalRoutes />
-        </>
+        <Dashboard />
       ) : (
         <ExternalRoutes />
       )}
