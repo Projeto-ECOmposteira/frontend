@@ -3,6 +3,10 @@ import { makeStyles } from "@material-ui/core/styles";
 const useStyles = makeStyles((theme) => ({
   root: {
     display: "flex",
+    "& h2": {
+      fontWeight: "bold",
+      textTransform: "uppercase"
+    },
     "& .MuiPaper-elevation4": {
       boxShadow:
         "rgba(0, 0, 0, 0.1) 0px 1px 3px 0px, rgba(0, 0, 0, 0.06) 0px 1px 2px 0px",
