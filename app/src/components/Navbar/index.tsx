@@ -7,21 +7,13 @@ import IconButton from "@material-ui/core/IconButton";
 import MenuIcon from "@material-ui/icons/Menu";
 import Menu from "@material-ui/core/Menu";
 import Avatar from "@material-ui/core/Avatar";
-import { Button, Drawer, List, MenuItem } from "@material-ui/core";
+import { Button, MenuItem } from "@material-ui/core";
 import { Link, useHistory } from "react-router-dom";
 import LogoImage from "../../assets/img/logo.svg";
 import AuthContext from "../../contexts/auth";
 import { getUsernameInitialsLetters } from "../../utils/userDataTransform";
-import clsx from "clsx";
 import InternalRoutes from "../../routes/InternalRoutes";
-import { SideMenuItem } from "../SideMenuItem";
-import { ReactComponent as CompousterIcon } from "../../assets/img/compousterIcon.svg";
-import { ReactComponent as WarningIcon } from "../../assets/img/warningIcon.svg";
-import { ReactComponent as ProductIcon } from "../../assets/img/productIcon.svg";
-import { ReactComponent as ReportIcon } from "../../assets/img/reportIcon.svg";
-import { ReactComponent as SupermarketIcon } from "../../assets/img/supermarketIcon.svg";
-
-const drawerWidth = 240;
+import SideMenu from "../SideMenu";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -80,33 +72,6 @@ const useStyles = makeStyles((theme: Theme) =>
       marginLeft: "0.5rem",
       [theme.breakpoints.down("xs")]: {
         fontSize: "16px",
-      },
-    },
-    drawer: {
-      background: theme.palette.primary.light,
-      width: drawerWidth,
-      flexShrink: 0,
-      whiteSpace: "nowrap",
-    },
-    drawerOpen: {
-      width: drawerWidth,
-      transition: theme.transitions.create("width", {
-        easing: theme.transitions.easing.sharp,
-        duration: theme.transitions.duration.enteringScreen,
-      }),
-    },
-    drawerClose: {
-      transition: theme.transitions.create("width", {
-        easing: theme.transitions.easing.sharp,
-        duration: theme.transitions.duration.leavingScreen,
-      }),
-      overflowX: "hidden",
-      width: theme.spacing(8) + 1,
-      [theme.breakpoints.up("sm")]: {
-        width: theme.spacing(10) + 1,
-      },
-      [theme.breakpoints.down("xs")]: {
-        width: 0,
       },
     },
     toolbar: {
@@ -228,40 +193,7 @@ export default function Navbar() {
           </div>
         </Toolbar>
       </AppBar>
-      <Drawer
-        variant="permanent"
-        className={clsx(classes.drawer, {
-          [classes.drawerOpen]: openSideMenu,
-          [classes.drawerClose]: !openSideMenu,
-        })}
-        classes={{
-          paper: clsx(classes.drawer, {
-            [classes.drawerOpen]: openSideMenu,
-            [classes.drawerClose]: !openSideMenu,
-          }),
-        }}
-      >
-        <div className={classes.toolbar} />
-        <List>
-          <SideMenuItem
-            to="/home"
-            primary="Composteiras"
-            icon={<CompousterIcon />}
-          />
-          <SideMenuItem to="/a" primary="Alertas" icon={<WarningIcon />} />
-          <SideMenuItem
-            to="/b"
-            primary="Produtos permitidos"
-            icon={<ProductIcon />}
-          />
-          <SideMenuItem to="/c" primary="Relatórios" icon={<ReportIcon />} />
-          <SideMenuItem
-            to="/d"
-            primary="Supermercados"
-            icon={<SupermarketIcon />}
-          />
-        </List>
-      </Drawer>
+      <SideMenu openSideMenu={openSideMenu} />
       <main className={classes.content}>
         <div className={classes.toolbar} />
         <InternalRoutes />
