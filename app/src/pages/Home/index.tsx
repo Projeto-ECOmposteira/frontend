@@ -1,8 +1,8 @@
-import React from "react";
 import Container from "@material-ui/core/Container";
 import { useStyles } from "./styles";
 import Modal from '@material-ui/core/Modal';
 import CreateComposterModal from '../CreateComposterModal'
+import React from "react";
 
 // TODO
 export default function SignIn() {

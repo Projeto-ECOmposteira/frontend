@@ -34,7 +34,7 @@ export default function SupermarketRegister() {
     cnpj: "",
     cep: "",
     phone_number: "",
-    producer: "",
+    agricultural_producer: "",
     email: "",
     password: ""
   });
@@ -64,6 +64,8 @@ export default function SupermarketRegister() {
 
   const { register, formState: { errors }, handleSubmit, setValue } = useForm({ reValidateMode: 'onBlur' });
 
+  const [producers, setProducers] = useState(new Map());
+
   useEffect(() => {
     register("first_name", {
       pattern: /^[A-Za-z]+$/i
@@ -84,7 +86,7 @@ export default function SupermarketRegister() {
     register("phone_number", {
       pattern: /^\(\d{2}\)( \d | )(\d{4})-(\d{4})$/i
     })
-    register("producer", {
+    register("agricultural_producer", {
       pattern: /^(\d)+$/i
     })
     register("email", {
@@ -96,7 +98,30 @@ export default function SupermarketRegister() {
         message: "Senha muito curta"
       }
     })
-  }, [register]);
+    let url = `${process.env["REACT_APP_API_GATEWAY_BASE_URL"]}/api/producers/`
+    axios.get(url)
+      .then(function (response: any) {
+        for (let i in response.data) {
+          setProducers(new Map(producers.set(response.data[i].pk, response.data[i].first_name + ' ' + response.data[i].last_name)));
+        }
+      })
+      .catch(function (error: any) {
+        if (!error.response) {
+          const key = enqueueSnackbar('Erro de conexão.', {
+            variant: 'error',
+            preventDuplicate: true,
+            onClick: () => { closeSnackbar(key) }
+          });
+        } else {
+          const key = enqueueSnackbar('Erro interno do servidor.', {
+            variant: 'error',
+            preventDuplicate: true,
+            onClick: () => { closeSnackbar(key) }
+          });
+        }
+
+      });
+  }, [register]); // eslint-disable-line react-hooks/exhaustive-deps
 
   const [showPassword, setShowPassword] = useState(false)
   const [emailError, setEmailError] = useState(false)
@@ -120,7 +145,7 @@ export default function SupermarketRegister() {
       'password2': state.password,
     })
       .then(function () {
-        return history.push('success')
+        return history.push('/cadastrar_supermercado/success')
       })
       .catch(function (error: any) {
         if (!error.response) {
@@ -140,6 +165,14 @@ export default function SupermarketRegister() {
         }
 
       });
+  }
+
+  function getProducers() {
+    const prods: any = [];
+    producers.forEach((value: string, key: string) => {
+      prods.push(<option key={key} value={key}>{value}</option>)
+    });
+    return prods;
   }
 
   return (
@@ -299,15 +332,13 @@ export default function SupermarketRegister() {
                   native
                   onChange={handleChange}
                   label="Produtor agrícola vinculado *"
-                  id="producer"
-                  name="producer"
+                  id="agricultural_producer"
+                  name="agricultural_producer"
                 >
                   <option aria-label="None" value="" />
-                  <option value={1}>José</option>
-                  <option value={2}>Antônio</option>
-                  <option value={3}>Adriano</option>
+                  {getProducers()}
                 </Select>
-                {errors.producer && "Campo produtor agrícula vinculado inválido"}
+                {errors.agricultural_producer && "Campo produtor agrícula vinculado inválido"}
               </FormControl>
             </Grid>
           </Grid>
