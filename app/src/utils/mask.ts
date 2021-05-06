@@ -55,7 +55,7 @@ export function mask_email(email: string): string {
 }
 
 export function mask_mac_address(mac_address: string): string {
-    var new_str = mac_address.replace(/[^0-9a-fA-f]*/g, "");
+    var new_str = mac_address.replace(/[^0-9a-fA-F]*/g, "");
 
     if (new_str.length > 10) {
         new_str = new_str.replace(/^([0-9a-fA-F]{2})([0-9a-fA-F]{2})([0-9a-fA-F]{2})([0-9a-fA-F]{2})([0-9a-fA-F]{2})([0-9a-fA-F]{1,2}).*/, "$1:$2:$3:$4:$5:$6");
