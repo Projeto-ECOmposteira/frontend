@@ -27,7 +27,7 @@ export const AuthProvider: React.FC = ({ children }) => {
     }
 
     loadStorageData();
-  });
+  }, []);
 
   async function signIn() {
     const response = await auth.signIn();
