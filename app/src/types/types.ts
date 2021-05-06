@@ -6,3 +6,10 @@ export interface User {
     isSupermarket: boolean;
   };
 }
+
+export interface MaterialProps {
+  _id: string;
+  name: string;
+  imageLink: string;
+  materialType: string;
+}

@@ -1,14 +1,9 @@
 import { Box, Typography } from "@material-ui/core";
 import { useStyles } from "./styles";
+import { MaterialProps } from "../../types/types"; 
 
-export interface MaterialProps {
-  _id: string;
-  name: string;
-  imageLink: string;
-  materialType: string;
-}
 
-export default function Navbar(props: MaterialProps) {
+export default function Material(props: MaterialProps) {
   const classes = useStyles();
   return (
     <Box className={classes.root}>
