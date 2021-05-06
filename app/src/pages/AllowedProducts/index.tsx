@@ -6,6 +6,29 @@ import { getMaterials } from "../../services/material";
 import { MaterialProps } from "../../types/types";
 import { useStyles } from "./styles";
 
+interface SpecificMaterialsProps {
+  materials: Array<MaterialProps>;
+}
+
+function SpecificMaterials(props: SpecificMaterialsProps) {
+  const classes = useStyles();
+
+  return (
+    <Grid container className={classes.materialsContainer} spacing={6}>
+      {props.materials.map((material) => (
+        <Grid key={material._id} item>
+          <Material
+            _id={material._id}
+            name={material.name}
+            imageLink={material.imageLink}
+            materialType={material.materialType}
+          />
+        </Grid>
+      ))}
+    </Grid>
+  );
+}
+
 export default function AllowedProducts() {
   const classes = useStyles();
   const [materials, setMaterials] = useState<Array<MaterialProps>>([]);
@@ -29,26 +52,44 @@ export default function AllowedProducts() {
 
   return (
     <Container component="main">
-      <Box className={classes.header}>
-        <Typography variant="h5" component="h2">
-          Materiais permitidos na composteira
-        </Typography>
-        <Typography variant="body1" component="h2" gutterBottom>
-          Ricos em carbono
-        </Typography>
+      <Box m={2}>
+        <Box className={classes.header}>
+          <Typography variant="h5" component="h2">
+            Materiais permitidos na composteira
+          </Typography>
+          <Typography variant="h5" component="h3" gutterBottom>
+            Ricos em carbono
+          </Typography>
+        </Box>
+        <SpecificMaterials materials={getSpecificMaterial("1")} />
       </Box>
-      <Grid container className={classes.materialsContainer} spacing={6}>
-        {getSpecificMaterial("1").map((material) => (
-          <Grid key={material._id} item>
-            <Material
-              _id={material._id}
-              name={material.name}
-              imageLink={material.imageLink}
-              materialType={material.materialType}
-            />
-          </Grid>
-        ))}
-      </Grid>
+      <Box m={2}>
+        <Box className={classes.header}>
+          <Typography variant="h5" component="h2">
+            Materiais permitidos na composteira
+          </Typography>
+          <Typography variant="h5" component="h3" gutterBottom>
+            Ricos em nitrogênio
+          </Typography>
+        </Box>
+        <SpecificMaterials materials={getSpecificMaterial("2")} />
+      </Box>
+      <Box m={2}>
+        <Box className={classes.header}>
+          <Typography variant="h5" component="h2">
+            Materiais permitidos com moderação
+          </Typography>
+        </Box>
+        <SpecificMaterials materials={getSpecificMaterial("3")} />
+      </Box>
+      <Box m={2}>
+        <Box className={classes.header}>
+          <Typography variant="h5" component="h2">
+            Materiais não permitidos na composteira
+          </Typography>
+        </Box>
+        <SpecificMaterials materials={getSpecificMaterial("4")} />
+      </Box>
     </Container>
   );
 }
