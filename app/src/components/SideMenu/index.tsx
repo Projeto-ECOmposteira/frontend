@@ -1,5 +1,5 @@
 import clsx from "clsx";
-import { ReactComponent as CompousterIcon } from "../../assets/img/compousterIcon.svg";
+import { ReactComponent as ComposterIcon } from "../../assets/img/composterIcon.svg";
 import { ReactComponent as WarningIcon } from "../../assets/img/warningIcon.svg";
 import { ReactComponent as ProductIcon } from "../../assets/img/productIcon.svg";
 import { ReactComponent as ReportIcon } from "../../assets/img/reportIcon.svg";
@@ -34,17 +34,17 @@ export default function SideMenu(props: SideMenuProps) {
         <SideMenuItem
           to="/home"
           primary="Composteiras"
-          icon={<CompousterIcon />}
+          icon={<ComposterIcon />}
         />
-        <SideMenuItem to="/a" primary="Alertas" icon={<WarningIcon />} />
+        <SideMenuItem to="/warnings" primary="Alertas" icon={<WarningIcon />} />
         <SideMenuItem
-          to="/b"
+          to="/allowed-products"
           primary="Produtos permitidos"
           icon={<ProductIcon />}
         />
-        <SideMenuItem to="/c" primary="Relatórios" icon={<ReportIcon />} />
+        <SideMenuItem to="/reports" primary="Relatórios" icon={<ReportIcon />} />
         <SideMenuItem
-          to="/d"
+          to="/supermarkets"
           primary="Supermercados"
           icon={<SupermarketIcon />}
         />
