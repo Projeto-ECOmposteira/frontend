@@ -5,22 +5,13 @@ import { useStyles } from "./styles";
 import { useForm } from "react-hook-form";
 import { mask_mac_address } from '../../utils/mask';
 import Button from "@material-ui/core/Button";
-import LogoImage from "../../assets/img/logo.svg";
 import FormControl from '@material-ui/core/FormControl';
 import InputLabel from '@material-ui/core/InputLabel';
 import Select from '@material-ui/core/Select';
-import InputAdornment from '@material-ui/core/InputAdornment';
-import PersonIcon from '@material-ui/icons/Person';
-import OutlinedInput from '@material-ui/core/OutlinedInput';
-import Link from "@material-ui/core/Link";
-import Visibility from '@material-ui/icons/Visibility';
-import VisibilityOff from '@material-ui/icons/VisibilityOff';
 import IconButton from '@material-ui/core/IconButton';
-import axios from 'axios';
 import { useSnackbar } from 'notistack';
-import { mask_cep, mask_cnpj, mask_email, mask_only_one_name, mask_phone_number } from '../../utils/mask';
-import { useHistory } from "react-router-dom";
 import CloseIcon from '@material-ui/icons/Close';
+import api from '../../services/api'
 
 interface CreateComposterModalProps {
   closeEvent: () => void
@@ -49,13 +40,74 @@ export default function CreateComposterModal(Props: CreateComposterModalProps) {
 
   const { register, formState: { errors }, handleSubmit, setValue } = useForm({ reValidateMode: 'onBlur' });
 
+  const { enqueueSnackbar, closeSnackbar } = useSnackbar();
+
+  const [supermarket, setSupermakets] = useState(new Map());
+
   useEffect(() => {
     register("mac_address", {
       pattern: /^(([0-9a-fA-F]{2}):){5}([0-9a-fA-F]{2})$/i
     })
     register("composter_name")
     register("composter_description")
+    let url = `${process.env["REACT_APP_API_GATEWAY_BASE_URL"]}/api/get_producer_supermarket/`
+    api.get(url)
+      .then(function (response: any) {
+        console.log(response.data)
+        for (let i in response.data) {
+          setSupermakets(new Map(supermarket.set(response.data[i].pk, response.data[i].comercial_name)));
+        }
+      })
+      .catch(function (error: any) {
+        if (!error.response) {
+          const key = enqueueSnackbar('Erro de conexão.', {
+            variant: 'error',
+            preventDuplicate: true,
+            onClick: () => { closeSnackbar(key) }
+          });
+        } else {
+          const key = enqueueSnackbar('Erro interno do servidor.', {
+            variant: 'error',
+            preventDuplicate: true,
+            onClick: () => { closeSnackbar(key) }
+          });
+        }
+
+      });
   }, [register]);
+
+  function getSupermarkets() {
+    const supermarkets: any = [];
+    supermarket.forEach((value: string, key: string) => {
+      supermarkets.push(<option key={key} value={key}>{value}</option>)
+    });
+    return supermarkets;
+  }
+
+  const registerComposter = (data: any) => {
+    let url = `${process.env["REACT_APP_API_GATEWAY_BASE_URL"]}/api/register_composter/`
+    api.post(url, {
+      ...data,
+    })
+      .then(function () {
+        Props.closeEvent()
+      })
+      .catch(function (error: any) {
+        if (!error.response) {
+          const key = enqueueSnackbar('Erro de conexão.', {
+            variant: 'error',
+            preventDuplicate: true,
+            onClick: () => { closeSnackbar(key) }
+          });
+        } else {
+          const key = enqueueSnackbar('Erro interno do servidor.', {
+            variant: 'error',
+            preventDuplicate: true,
+            onClick: () => { closeSnackbar(key) }
+          });
+        }
+      });
+  }
 
   return (
     <Container component="main" maxWidth="sm">
@@ -66,108 +118,105 @@ export default function CreateComposterModal(Props: CreateComposterModalProps) {
             <CloseIcon />
           </IconButton>
         </div>
-        <Grid
-          container
-          direction="row"
-          justify="center"
-          alignItems="center"
-          spacing={1}
-        >
-          <Grid item xs={12}>
-            <TextField
-              variant="outlined"
-              margin="normal"
-              required
-              fullWidth
-              id="composter_name"
-              label="Nome da Composteira"
-              name="composter_name"
-              autoFocus
-              value={state.composter_name}
-              onChange={handleChange}
-            />
-            {errors.composter_name && "Campo nome da composteira inválido"}
-          </Grid>
-          <Grid item xs={12}>
-            <TextField
-              variant="outlined"
-              margin="normal"
-              required
-              fullWidth
-              id="composter_description"
-              label="Descrição da composteira"
-              name="composter_description"
-              value={state.composter_description}
-              onChange={handleChange}
-            />
-            {errors.composter_description && "Campo descrição da composteira inválido"}
-          </Grid>
-          <Grid item xs={12} className={classes.marginTop}>
-            <FormControl variant="outlined" fullWidth>
-              <InputLabel htmlFor="outlined-age-native-simple">Supermercado *</InputLabel>
-              <Select
-                required
-                native
-                onChange={handleChange}
-                label="Supermercado *"
-                id="supermarket"
-                name="supermarket"
-              >
-                <option aria-label="None" value="" />
-                <option value={1}>Supermercado da Vovó</option>
-                <option value={2}>Supermercado do Seu Zé</option>
-                <option value={3}>Supermercado do Dedé</option>
-              </Select>
-              {errors.supermarket && "Campo produtor agrícula vinculado inválido"}
-            </FormControl>
-          </Grid>
-          <Grid item xs={12}>
-            <TextField
-              variant="outlined"
-              margin="normal"
-              required
-              fullWidth
-              id="mac_address"
-              label="Endereço MAC da ESP32"
-              name="mac_address"
-              value={state.mac_address}
-              onChange={handleChange}
-            />
-            {errors.mac_address && "Campo endereço MAC da ESP32 inválido"}
-          </Grid>
+        <form onSubmit={handleSubmit(registerComposter)}>
           <Grid
             container
             direction="row"
             justify="center"
             alignItems="center"
-            spacing={5}
-            className={classes.marginTop}
+            spacing={1}
           >
-            <Grid item xs={6}>
-            <Button
-                onClick={Props.closeEvent}
+            <Grid item xs={12}>
+              <TextField
+                variant="outlined"
+                margin="normal"
+                required
                 fullWidth
-                variant="contained"
-                color="inherit"
-                
-                // className={classes.submit}
-              >
-                Cancelar
-          </Button>
+                id="composter_name"
+                label="Nome da Composteira"
+                name="composter_name"
+                autoFocus
+                value={state.composter_name}
+                onChange={handleChange}
+              />
+              {errors.composter_name && "Campo nome da composteira inválido"}
             </Grid>
-            <Grid item xs={6}>
-              <Button
-                type="submit"
+            <Grid item xs={12}>
+              <TextField
+                variant="outlined"
+                margin="normal"
+                required
                 fullWidth
-                variant="contained"
-                color="secondary"
-                // className={classes.submit}
-              >
-                Cadastrar
+                id="composter_description"
+                label="Descrição da composteira"
+                name="composter_description"
+                value={state.composter_description}
+                onChange={handleChange}
+              />
+              {errors.composter_description && "Campo descrição da composteira inválido"}
+            </Grid>
+            <Grid item xs={12} className={classes.marginTop}>
+              <FormControl variant="outlined" fullWidth>
+                <InputLabel htmlFor="outlined-age-native-simple">Supermercado *</InputLabel>
+                <Select
+                  required
+                  native
+                  onChange={handleChange}
+                  label="Supermercado *"
+                  id="supermarket"
+                  name="supermarket"
+                >
+                  <option aria-label="None" value="" />
+                  {getSupermarkets()}
+                </Select>
+                {errors.supermarket && "Campo produtor agrícula vinculado inválido"}
+              </FormControl>
+            </Grid>
+            <Grid item xs={12}>
+              <TextField
+                variant="outlined"
+                margin="normal"
+                required
+                fullWidth
+                id="mac_address"
+                label="Endereço MAC da ESP32"
+                name="mac_address"
+                value={state.mac_address}
+                onChange={handleChange}
+              />
+              {errors.mac_address && "Campo endereço MAC da ESP32 inválido"}
+            </Grid>
+            <Grid
+              container
+              direction="row"
+              justify="center"
+              alignItems="center"
+              spacing={5}
+              className={classes.marginTop}
+            >
+              <Grid item xs={6}>
+                <Button
+                  onClick={Props.closeEvent}
+                  fullWidth
+                  variant="contained"
+                  color="inherit"
+                >
+                  Cancelar
           </Button>
+              </Grid>
+              <Grid item xs={6}>
+                <Button
+                  type="submit"
+                  fullWidth
+                  variant="contained"
+                  color="secondary"
+                >
+                  Cadastrar
+          </Button>
+              </Grid>
             </Grid>
           </Grid>
-        </Grid>
+        </form>
       </div>
     </Container>
   );
