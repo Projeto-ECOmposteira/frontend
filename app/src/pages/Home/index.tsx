@@ -5,7 +5,7 @@ import CreateComposterModal from '../CreateComposterModal'
 import React from "react";
 
 // TODO
-export default function SignIn() {
+export default function Home() {
   const classes = useStyles();
 
   const [open, setOpen] = React.useState(false);
@@ -32,6 +32,7 @@ export default function SignIn() {
       >
         <CreateComposterModal closeEvent={handleClose} />
       </Modal>
+      <h1 className={classes.header}>Composteiras</h1>
     </Container>
   );
 }

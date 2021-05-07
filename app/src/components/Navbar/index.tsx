@@ -1,168 +1,114 @@
-import React, { useContext } from "react";
-import { createStyles, makeStyles, Theme } from "@material-ui/core/styles";
+import React, { useContext, useState } from "react";
 import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
 import Typography from "@material-ui/core/Typography";
 import IconButton from "@material-ui/core/IconButton";
 import MenuIcon from "@material-ui/icons/Menu";
-import MenuItem from "@material-ui/core/MenuItem";
 import Menu from "@material-ui/core/Menu";
 import Avatar from "@material-ui/core/Avatar";
-import { Button } from "@material-ui/core";
+import { Button, MenuItem } from "@material-ui/core";
 import { Link, useHistory } from "react-router-dom";
 import LogoImage from "../../assets/img/logo.svg";
 import AuthContext from "../../contexts/auth";
 import { getUsernameInitialsLetters } from "../../utils/userDataTransform";
+import { useStyles } from "./styles";
 
-const useStyles = makeStyles((theme: Theme) =>
-  createStyles({
-    root: {
-      flexGrow: 1,
-    },
-    appBar: {
-      backgroundColor: theme.palette.primary.light,
-    },
-    logo: {
-      height: "48px",
-      width: "48px",
-    },
-    logout: {
-      marginLeft: theme.spacing(1.5),
-    },
-    avatar: {
-      backgroundColor: theme.palette.primary.main,
-    },
-    userRole: {
-      fontSize: "14px",
-      fontWeight: "bold",
-    },
-    username: {
-      fontSize: "20px",
-    },
-    menuButton: {
-      marginRight: theme.spacing(1),
-      [theme.breakpoints.down("xs")]: {
-        marginRight: 0,
-      },
-    },
-    userContainer: {
-      display: "flex",
-      alignItems: "center",
-      justifyContent: "flex-end",
-    },
-    userInfo: {
-      marginRight: "1rem",
-      [theme.breakpoints.down("xs")]: {
-        display: "none",
-      },
-    },
-    title: {
-      flexGrow: 1,
-      fontWeight: 500,
-      marginLeft: "0.5rem",
-      [theme.breakpoints.down("xs")]: {
-        fontSize: "16px",
-      },
-    },
-  })
-);
+export interface NavbarProps {
+  handleSideMenu: () => void;
+}
 
-export default function Navbar() {
+export default function Navbar(props: NavbarProps) {
+  const classes = useStyles();
   const history = useHistory();
   const { user, signOut } = useContext(AuthContext);
-  const classes = useStyles();
-  const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
-  const open = Boolean(anchorEl);
+  const [userMenu, setUserMenu] = useState<null | HTMLElement>(null);
+  const openUserMenu = Boolean(userMenu);
 
-  const handleMenu = (event: React.MouseEvent<HTMLElement>) => {
-    setAnchorEl(event.currentTarget);
+  const handleUserMenu = (event: React.MouseEvent<HTMLElement>) => {
+    setUserMenu(event.currentTarget);
   };
 
-  const handleClose = () => {
-    setAnchorEl(null);
+  const handleUserMenuClose = () => {
+    setUserMenu(null);
   };
 
   const handleSignOut = () => {
     signOut();
-    history.push('/');
+    history.push("/");
   };
 
   return (
-    <div className={classes.root}>
-      <AppBar className={classes.appBar} position="static">
-        <Toolbar style={{ justifyContent: "space-between" }}>
-          <div>
-            <IconButton
-              edge="start"
-              className={classes.menuButton}
+    <AppBar className={classes.appBar} position="fixed">
+      <Toolbar style={{ justifyContent: "space-between" }}>
+        <div>
+          <IconButton
+            edge="start"
+            className={classes.menuButton}
+            color="secondary"
+            aria-label="menu"
+            onClick={props.handleSideMenu}
+          >
+            <MenuIcon />
+          </IconButton>
+          <Button disableFocusRipple component={Link} to="/home" disableRipple>
+            <img className={classes.logo} src={LogoImage} alt="Logo" />
+            <Typography component="h1" variant="h6" className={classes.title}>
+              ECOMPOSTEIRA
+            </Typography>
+          </Button>
+        </div>
+        <div className={classes.userContainer}>
+          <div className={classes.userInfo}>
+            <Typography
+              component="h3"
+              variant="h5"
               color="secondary"
-              aria-label="menu"
+              className={classes.userRole}
             >
-              <MenuIcon />
-            </IconButton>
-            <Button
-              disableFocusRipple
-              component={Link}
-              to="/home"
-              disableRipple
+              {user?.data?.isSupermarket === true
+                ? "Supermercado"
+                : "Produtor agrícola"}
+            </Typography>
+            <Typography
+              component="h4"
+              variant="h5"
+              color="secondary"
+              className={classes.username}
             >
-              <img className={classes.logo} src={LogoImage} alt="Logo" />
-              <Typography component="h1" variant="h6" className={classes.title}>
-                ECOMPOSTEIRA
-              </Typography>
-            </Button>
+              {user?.data?.name || "Sem nome"}
+            </Typography>
           </div>
-          <div className={classes.userContainer}>
-            <div className={classes.userInfo}>
-              <Typography
-                component="h3"
-                variant="h5"
-                color="secondary"
-                className={classes.userRole}
-              >
-                {user?.data?.isSupermarket === true ? "Supermercado" : "Produtor agrícola"}
-              </Typography>
-              <Typography
-                component="h4"
-                variant="h5"
-                color="secondary"
-                className={classes.username}
-              >
-                {user?.data?.name || "Sem nome" }
-              </Typography>
-            </div>
-            <IconButton
-              aria-label="account of current user"
-              aria-controls="menu-appbar"
-              aria-haspopup="true"
-              onClick={handleMenu}
-              color="inherit"
-              className={classes.logout}
-            >
-              <Avatar className={classes.avatar} alt="Username abbreviation">
-                {getUsernameInitialsLetters(user?.data?.name || "Sem nome")}
-              </Avatar>
-            </IconButton>
-            <Menu
-              id="menu-appbar"
-              anchorEl={anchorEl}
-              anchorOrigin={{
-                vertical: "top",
-                horizontal: "right",
-              }}
-              keepMounted
-              transformOrigin={{
-                vertical: "top",
-                horizontal: "right",
-              }}
-              open={open}
-              onClose={handleClose}
-            >
-              <MenuItem onClick={handleSignOut}>Sair</MenuItem>
-            </Menu>
-          </div>
-        </Toolbar>
-      </AppBar>
-    </div>
+          <IconButton
+            aria-label="account of current user"
+            aria-controls="menu-appbar"
+            aria-haspopup="true"
+            onClick={handleUserMenu}
+            color="inherit"
+            className={classes.logout}
+          >
+            <Avatar className={classes.avatar} alt="Username abbreviation">
+              {getUsernameInitialsLetters(user?.data?.name || "Sem nome")}
+            </Avatar>
+          </IconButton>
+          <Menu
+            id="menu-appbar"
+            anchorEl={userMenu}
+            anchorOrigin={{
+              vertical: "top",
+              horizontal: "right",
+            }}
+            keepMounted
+            transformOrigin={{
+              vertical: "top",
+              horizontal: "right",
+            }}
+            open={openUserMenu}
+            onClose={handleUserMenuClose}
+          >
+            <MenuItem onClick={handleSignOut}>Sair</MenuItem>
+          </Menu>
+        </div>
+      </Toolbar>
+    </AppBar>
   );
 }
