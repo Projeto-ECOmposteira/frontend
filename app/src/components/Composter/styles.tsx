@@ -16,6 +16,19 @@ const useStyles = makeStyles((theme) => ({
     marginTop: theme.spacing(1),
     marginBottom: theme.spacing(1),
   },
+  buttons: {
+    display: "flex",
+    justifyContent: "space-between",
+    padding: theme.spacing(2),
+    paddingTop: 0,
+  },
+  sendEmailButton: {
+    color: "#2C98F0",
+  },
+  detailsButton: {
+    fontWeight: "bold",
+    color: "#2C98F0",
+  }
 }));
 
 export { useStyles };

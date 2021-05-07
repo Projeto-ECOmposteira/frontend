@@ -2,6 +2,7 @@ import Typography from "@material-ui/core/Typography";
 import { useStyles } from "./styles";
 import {
   Box,
+  Button,
   Card,
   CardActionArea,
   CardContent,
@@ -83,6 +84,10 @@ export default function Composter() {
             </Grid>
           </Grid>
         </CardContent>
+      </CardActionArea>
+      <CardActionArea className={classes.buttons}>
+        <Button className={classes.sendEmailButton}>Enviar e-mail</Button>
+        <Button className={classes.detailsButton}>Detalhes</Button>
       </CardActionArea>
     </Card>
   );
