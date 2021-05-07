@@ -22,7 +22,7 @@ export const AuthProvider: React.FC = ({ children }) => {
 
       if (storagedUser && storagedToken) {
         setUser(JSON.parse(storagedUser));
-        api.defaults.headers.Authorization = `Baerer ${storagedToken}`;
+        api.defaults.headers.Authorization = `Bearer ${storagedToken}`;
       }
     }
 
@@ -33,7 +33,7 @@ export const AuthProvider: React.FC = ({ children }) => {
     const response = await auth.signIn();
     setUser(response);
 
-    api.defaults.headers.Authorization = `Baerer ${response.token}`;
+    api.defaults.headers.Authorization = `Bearer ${response.token}`;
 
     localStorage.setItem('@RAuth:user', JSON.stringify(response));
     localStorage.setItem('@RAuth:token', response.token);
