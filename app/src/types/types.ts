@@ -13,3 +13,22 @@ export interface MaterialProps {
   imageLink: string;
   materialType: string;
 }
+
+export interface ComposterProps {
+  _id: string;
+  peso: number;
+  ph: number;
+  cn: number;
+  o2: number;
+  temperatura: number;
+  pressao: number;
+  umidade: number;
+  co2: number;
+  dataHoraMedida: string;
+  macAddress: string;
+  nome: string;
+  descricao: string;
+  status: number;
+  emailSupermercado: string;
+  emailProdutorAgricola: string;
+}
