@@ -5,6 +5,7 @@ const useStyles = makeStyles((theme) => ({
     display: "flex",
     flexDirection: "column",
     maxWidth: "500px",
+    marginBottom: theme.spacing(4),
   },
   header: {
     padding: theme.spacing(2),

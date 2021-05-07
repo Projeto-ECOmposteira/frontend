@@ -11,26 +11,42 @@ import {
 import { measures } from "./measures";
 import ComposterMeasure from "../ComposterMeasure";
 import Warning2Icon from "../../assets/img/warning2Icon.svg";
+import CheckIcon from "../../assets/img/checkIcon.svg";
 import { ComposterProps } from "../../types/types";
 
 export default function Composter(props: ComposterProps) {
   const classes = useStyles();
+
   return (
     <Card className={classes.root}>
       <CardActionArea>
         <Box className={classes.header}>
           <Box className={classes.infoIcon}>
-            <img
-              height="48px"
-              width="48px"
-              src={Warning2Icon}
-              alt="Compostagem irregular"
-            />
+            {props.status === 1 && (
+              <img
+                height="48px"
+                width="48px"
+                src={Warning2Icon}
+                alt="Compostagem irregular"
+              />
+            )}
+            {props.status === 2 && (
+              <img
+                height="48px"
+                width="48px"
+                src={CheckIcon}
+                alt="Compostagem completa"
+              />
+            )}
           </Box>
           <Typography component="h3" variant="h4">
             {props.nome}
           </Typography>
-          <Typography>Compostagem em andamento</Typography>
+          <Typography>
+            {props.status === 0 && "Compostagem em andamento"}
+            {props.status === 1 && "Compostagem irregular"}
+            {props.status === 2 && "Compostagem completa"}
+          </Typography>
         </Box>
         <CardContent>
           <Typography component="h4" variant="body1">
