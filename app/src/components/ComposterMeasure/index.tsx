@@ -2,12 +2,12 @@ import Typography from "@material-ui/core/Typography";
 import { useStyles } from "./styles";
 import { Box } from "@material-ui/core";
 
-export interface ComposterMeasure {
+export interface ComposterMeasureProps {
   name: string;
   image: any;
 }
 
-export default function ComposterMeasure(props: ComposterMeasure) {
+export default function ComposterMeasure(props: ComposterMeasureProps) {
   const classes = useStyles();
 
   return (
