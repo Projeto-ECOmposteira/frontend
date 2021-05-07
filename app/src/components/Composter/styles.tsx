@@ -22,7 +22,7 @@ const useStyles = makeStyles((theme) => ({
     marginTop: theme.spacing(1),
   },
   buttons: {
-    display: "flex",
+    display: "flex !important",
     justifyContent: "space-between",
     alignItems: "center",
     padding: theme.spacing(1),
