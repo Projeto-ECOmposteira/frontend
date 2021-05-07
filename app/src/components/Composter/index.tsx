@@ -11,8 +11,9 @@ import {
 import { measures } from "./measures";
 import ComposterMeasure from "../ComposterMeasure";
 import Warning2Icon from "../../assets/img/warning2Icon.svg";
+import { ComposterProps } from "../../types/types";
 
-export default function Composter() {
+export default function Composter(props: ComposterProps) {
   const classes = useStyles();
   return (
     <Card className={classes.root}>
@@ -27,15 +28,13 @@ export default function Composter() {
             />
           </Box>
           <Typography component="h3" variant="h4">
-            Composteira 1
+            {props.nome}
           </Typography>
           <Typography>Compostagem em andamento</Typography>
         </Box>
         <CardContent>
           <Typography component="h4" variant="body1">
-            Composteira situada no patio superior do supermercado Dona de Casa
-            sob responsabilidade do fiscal de qualidade de produtos do
-            estabelecimento
+            {props.descricao}
           </Typography>
           <Grid
             container
@@ -47,48 +46,56 @@ export default function Composter() {
               <ComposterMeasure
                 name={measures.weightIcon.name}
                 image={measures.weightIcon.image}
+                data={String(props.peso)}
               />
             </Grid>
             <Grid key="2" item>
               <ComposterMeasure
                 name={measures.ph.name}
                 image={measures.ph.image}
+                data={String(props.ph)}
               />
             </Grid>
             <Grid key="3" item>
               <ComposterMeasure
                 name={measures.carbonNitrogen.name}
                 image={measures.carbonNitrogen.image}
+                data={String(props.cn)}
               />
             </Grid>
             <Grid key="4" item>
               <ComposterMeasure
                 name={measures.oxygen.name}
                 image={measures.oxygen.image}
+                data={String(props.o2)}
               />
             </Grid>
             <Grid key="5" item>
               <ComposterMeasure
                 name={measures.temperatureIcon.name}
                 image={measures.temperatureIcon.image}
+                data={String(props.temperatura)}
               />
             </Grid>
             <Grid key="6" item>
               <ComposterMeasure
                 name={measures.pressureIcon.name}
                 image={measures.pressureIcon.image}
+                data={String(props.pressao)}
               />
             </Grid>
             <Grid key="7" item>
               <ComposterMeasure
                 name={measures.humidity.name}
                 image={measures.humidity.image}
+                data={String(props.umidade)}
               />
             </Grid>
             <Grid key="8" item>
               <ComposterMeasure
                 name={measures.carbonDioxide.name}
                 image={measures.carbonDioxide.image}
+                data={String(props.co2)}
               />
             </Grid>
           </Grid>
