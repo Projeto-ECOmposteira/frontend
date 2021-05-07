@@ -1,13 +1,19 @@
+import { Grid } from "@material-ui/core";
 import Container from "@material-ui/core/Container";
-import { useStyles } from "./styles";
+import Composter from "../../components/Composter";
 
 // TODO
 export default function Home() {
-  const classes = useStyles();
-
   return (
-    <Container  component="main">
-      <h1 className={classes.header}>Composteiras</h1>
+    <Container component="main">
+      <Grid container justify="space-around">
+        <Grid item>
+          <Composter />
+        </Grid>
+        <Grid item>
+          <Composter />
+        </Grid>
+      </Grid>
     </Container>
   );
 }
