@@ -46,7 +46,7 @@ export default function Composter(props: ComposterProps) {
               <ComposterMeasure
                 name={measures.weightIcon.name}
                 image={measures.weightIcon.image}
-                data={String(props.peso)}
+                data={`${props.peso} kg`}
               />
             </Grid>
             <Grid key="2" item>
@@ -60,42 +60,42 @@ export default function Composter(props: ComposterProps) {
               <ComposterMeasure
                 name={measures.carbonNitrogen.name}
                 image={measures.carbonNitrogen.image}
-                data={String(props.cn)}
+                data={`${props.cn}/1`}
               />
             </Grid>
             <Grid key="4" item>
               <ComposterMeasure
                 name={measures.oxygen.name}
                 image={measures.oxygen.image}
-                data={String(props.o2)}
+                data={`${props.o2} ml/g`}
               />
             </Grid>
             <Grid key="5" item>
               <ComposterMeasure
                 name={measures.temperatureIcon.name}
                 image={measures.temperatureIcon.image}
-                data={String(props.temperatura)}
+                data={`${props.temperatura} °C`}
               />
             </Grid>
             <Grid key="6" item>
               <ComposterMeasure
                 name={measures.pressureIcon.name}
                 image={measures.pressureIcon.image}
-                data={String(props.pressao)}
+                data={`${props.pressao} hpa`}
               />
             </Grid>
             <Grid key="7" item>
               <ComposterMeasure
                 name={measures.humidity.name}
                 image={measures.humidity.image}
-                data={String(props.umidade)}
+                data={`${props.umidade} %`}
               />
             </Grid>
             <Grid key="8" item>
               <ComposterMeasure
                 name={measures.carbonDioxide.name}
                 image={measures.carbonDioxide.image}
-                data={String(props.co2)}
+                data={`${props.co2} ppm`}
               />
             </Grid>
           </Grid>
