@@ -10,6 +10,7 @@ import {
 } from "@material-ui/core";
 import { measures } from "./measures";
 import ComposterMeasure from "../ComposterMeasure";
+import Warning2Icon from "../../assets/img/warning2Icon.svg";
 
 export default function Composter() {
   const classes = useStyles();
@@ -17,6 +18,14 @@ export default function Composter() {
     <Card className={classes.root}>
       <CardActionArea>
         <Box className={classes.header}>
+          <Box className={classes.infoIcon}>
+            <img
+              height="48px"
+              width="48px"
+              src={Warning2Icon}
+              alt="Compostagem irregular"
+            />
+          </Box>
           <Typography component="h3" variant="h4">
             Composteira 1
           </Typography>

@@ -11,16 +11,20 @@ const useStyles = makeStyles((theme) => ({
     textAlign: "center",
     backgroundColor: theme.palette.primary.light,
   },
+  infoIcon: {
+    position: "absolute",
+    top: 10,
+    right: 10,
+  },
   measures: {
     alignContent: "space-between",
     marginTop: theme.spacing(1),
-    marginBottom: theme.spacing(1),
   },
   buttons: {
     display: "flex",
     justifyContent: "space-between",
-    padding: theme.spacing(2),
-    paddingTop: 0,
+    alignItems: "center",
+    padding: theme.spacing(1),
   },
   sendEmailButton: {
     color: "#2C98F0",
@@ -28,7 +32,7 @@ const useStyles = makeStyles((theme) => ({
   detailsButton: {
     fontWeight: "bold",
     color: "#2C98F0",
-  }
+  },
 }));
 
 export { useStyles };
