@@ -5,6 +5,7 @@ import { Box } from "@material-ui/core";
 export interface ComposterMeasureProps {
   name: string;
   image: any;
+  data: string;
 }
 
 export default function ComposterMeasure(props: ComposterMeasureProps) {
@@ -17,7 +18,7 @@ export default function ComposterMeasure(props: ComposterMeasureProps) {
         {props.name}
       </Typography>
       <Typography className={classes.measure} component="h5" variant="h6">
-        70 kg
+        {props.data}
       </Typography>
     </Box>
   );
