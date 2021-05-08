@@ -22,7 +22,7 @@ export function getComposters(): Array<ComposterProps> {
       emailProdutorAgricola: "b@b.com",
     },
     {
-      _id: "123123",
+      _id: "123124",
       peso: 320,
       ph: 7.2,
       cn: 18,
@@ -41,7 +41,7 @@ export function getComposters(): Array<ComposterProps> {
       emailProdutorAgricola: "b@b.com",
     },
     {
-      _id: "123123",
+      _id: "123125",
       peso: 440,
       ph: 8.2,
       cn: 20,

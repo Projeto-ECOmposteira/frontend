@@ -14,12 +14,12 @@ export default function SignIn() {
   const classes = useStyles();
   const { signIn } = useContext(AuthContext);
 
-  const [email, setEmail] = useState<String>("");
-  const [password, setPassword] = useState<String>("");
+  const [email, setEmail] = useState<string>("");
+  const [password, setPassword] = useState<string>("");
 
   async function handleSign(event: any) {
     event.preventDefault();
-    signIn();
+    signIn(email, password);
   }
 
   return (
@@ -32,7 +32,7 @@ export default function SignIn() {
             alt="Projeto ECOmposteira"
           />
         </div>
-        <form className={classes.form} noValidate onSubmit={handleSign}>
+        <form className={classes.form} onSubmit={handleSign}>
           <TextField
             variant="outlined"
             margin="normal"
