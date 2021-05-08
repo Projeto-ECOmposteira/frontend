@@ -4,6 +4,13 @@ import Typography from "@material-ui/core/Typography";
 import CustomMaterialTable from "../../components/CustomMaterialTable";
 import { useStyles } from "./styles";
 
+export interface WarningProps {
+  composterId: string;
+  composterName: string;
+  description: string;
+  startTimestamp: string;
+}
+
 export default function Warnings() {
   const classes = useStyles();
 
