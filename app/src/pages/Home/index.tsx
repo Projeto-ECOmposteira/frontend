@@ -1,11 +1,18 @@
 import { Grid } from "@material-ui/core";
 import Container from "@material-ui/core/Container";
+import { useStyles } from "./styles";
+import Modal from '@material-ui/core/Modal';
+import CreateComposterModal from '../CreateComposterModal'
+import React from "react";
 import { useEffect, useState } from "react";
 import Composter from "../../components/Composter";
 import { getComposters } from "../../services/composter";
 import { ComposterProps } from "../../types/types";
+import Button from "@material-ui/core/Button";
 
 export default function Home() {
+  const classes = useStyles();
+
   const [composters, setComposters] = useState<Array<ComposterProps>>([]);
 
   useEffect(() => {
@@ -17,8 +24,38 @@ export default function Home() {
     loadComposters();
   }, []);
 
+  const [open, setOpen] = React.useState(false);
+
+  const handleOpen = () => {
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
+
   return (
     <Container component="main">
+      <Modal
+        open={open}
+        onClose={handleClose}
+        aria-labelledby="simple-modal-title"
+        aria-describedby="simple-modal-description"
+      >
+        <CreateComposterModal closeEvent={handleClose} />
+      </Modal>
+      <div className={classes.titleButton}>
+        <h1 className={classes.header}>Composteiras</h1>
+        <Button
+          type="button"
+          onClick={handleOpen}
+          variant="contained"
+          color="secondary"
+          className={classes.button}
+        >
+          Cadastrar composteira
+          </Button>
+      </div>
       <Grid container justify="space-around">
         {composters.map((composter) => (
           <Grid key={composter._id} item>
