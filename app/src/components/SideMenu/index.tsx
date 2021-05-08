@@ -7,6 +7,8 @@ import { ReactComponent as SupermarketIcon } from "../../assets/img/supermarketI
 import { SideMenuItem } from "../SideMenuItem";
 import { Drawer, List } from "@material-ui/core";
 import { useStyles } from "./styles";
+import { useContext } from "react";
+import AuthContext from "../../contexts/auth";
 
 interface SideMenuProps {
   openSideMenu: boolean;
@@ -14,6 +16,8 @@ interface SideMenuProps {
 
 export default function SideMenu(props: SideMenuProps) {
   const classes = useStyles();
+
+  const { user } = useContext(AuthContext);
 
   return (
     <Drawer
@@ -43,11 +47,14 @@ export default function SideMenu(props: SideMenuProps) {
           icon={<ProductIcon />}
         />
         <SideMenuItem to="/reports" primary="Relatórios" icon={<ReportIcon />} />
-        <SideMenuItem
-          to="/supermarkets"
-          primary="Supermercados"
-          icon={<SupermarketIcon />}
-        />
+        {
+          Boolean(user?.data?.isSupermarket) == false &&
+          <SideMenuItem
+            to="/supermarkets"
+            primary="Supermercados"
+            icon={<SupermarketIcon />}
+          />
+        }
       </List>
     </Drawer>
   );
