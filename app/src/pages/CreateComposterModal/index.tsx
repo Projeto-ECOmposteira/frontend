@@ -21,14 +21,14 @@ export default function CreateComposterModal(Props: CreateComposterModalProps) {
   const classes = useStyles();
 
   const [state, setState] = useState({
-    composter_name: "",
-    composter_description: "",
-    mac_address: "",
-    supermarket: null,
+    name: "",
+    description: "",
+    macAddress: "",
+    supermarketId: null,
   });
   const handleChange = (e: any) => {
     let { name, value } = e.target;
-    if (name === 'mac_address') {
+    if (name === 'macAddress') {
       value = mask_mac_address(value)
     }
     setValue(name, value)
@@ -45,11 +45,11 @@ export default function CreateComposterModal(Props: CreateComposterModalProps) {
   const [supermarket, setSupermakets] = useState(new Map());
 
   useEffect(() => {
-    register("mac_address", {
+    register("macAddress", {
       pattern: /^(([0-9a-fA-F]{2}):){5}([0-9a-fA-F]{2})$/i
     })
-    register("composter_name")
-    register("composter_description")
+    register("name")
+    register("description")
     let url = `${process.env["REACT_APP_API_GATEWAY_BASE_URL"]}/api/get_producer_supermarket/`
     api.get(url)
       .then(function (response: any) {
@@ -132,14 +132,14 @@ export default function CreateComposterModal(Props: CreateComposterModalProps) {
                 margin="normal"
                 required
                 fullWidth
-                id="composter_name"
+                id="name"
                 label="Nome da Composteira"
-                name="composter_name"
+                name="name"
                 autoFocus
-                value={state.composter_name}
+                value={state.name}
                 onChange={handleChange}
               />
-              {errors.composter_name && "Campo nome da composteira inválido"}
+              {errors.name && "Campo nome da composteira inválido"}
             </Grid>
             <Grid item xs={12}>
               <TextField
@@ -147,13 +147,13 @@ export default function CreateComposterModal(Props: CreateComposterModalProps) {
                 margin="normal"
                 required
                 fullWidth
-                id="composter_description"
+                id="description"
                 label="Descrição da composteira"
-                name="composter_description"
-                value={state.composter_description}
+                name="description"
+                value={state.description}
                 onChange={handleChange}
               />
-              {errors.composter_description && "Campo descrição da composteira inválido"}
+              {errors.description && "Campo descrição da composteira inválido"}
             </Grid>
             <Grid item xs={12} className={classes.marginTop}>
               <FormControl variant="outlined" fullWidth>
@@ -163,13 +163,13 @@ export default function CreateComposterModal(Props: CreateComposterModalProps) {
                   native
                   onChange={handleChange}
                   label="Supermercado *"
-                  id="supermarket"
-                  name="supermarket"
+                  id="supermarketId"
+                  name="supermarketId"
                 >
                   <option aria-label="None" value="" />
                   {getSupermarkets()}
                 </Select>
-                {errors.supermarket && "Campo produtor agrícula vinculado inválido"}
+                {errors.supermarketId && "Campo produtor agrícula vinculado inválido"}
               </FormControl>
             </Grid>
             <Grid item xs={12}>
@@ -178,13 +178,13 @@ export default function CreateComposterModal(Props: CreateComposterModalProps) {
                 margin="normal"
                 required
                 fullWidth
-                id="mac_address"
+                id="macAddress"
                 label="Endereço MAC da ESP32"
-                name="mac_address"
-                value={state.mac_address}
+                name="macAddress"
+                value={state.macAddress}
                 onChange={handleChange}
               />
-              {errors.mac_address && "Campo endereço MAC da ESP32 inválido"}
+              {errors.macAddress && "Campo endereço MAC da ESP32 inválido"}
             </Grid>
             <Grid
               container
