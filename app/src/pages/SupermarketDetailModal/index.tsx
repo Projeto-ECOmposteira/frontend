@@ -7,10 +7,11 @@ import Grid from "@material-ui/core/Grid";
 import { useEffect, useState } from "react";
 import axios from 'axios';
 import { useSnackbar } from 'notistack';
+import clsx from "clsx";
 
 interface SupermarketDetailModalProps {
     closeEvent: () => void
-    id: number
+    id: number | null
 }
 
 export default function SupermarketDetailModal(Props: SupermarketDetailModalProps) {
@@ -24,7 +25,9 @@ export default function SupermarketDetailModal(Props: SupermarketDetailModalProp
         cep: '',
         cnpj: '',
         owner_phone_number: '',
+        phone_number: '',
         nome2: '',
+        comercial_name: '',
         agricultural_producer: {
             email: '',
             first_name: '',
@@ -85,7 +88,7 @@ export default function SupermarketDetailModal(Props: SupermarketDetailModalProp
                         <span>CEP</span>
                     </Grid>
                     <Grid item xs={6}>
-                        <span className={classes.bold}>{state.first_name + ' ' + state.last_name}</span>
+                        <span className={clsx(classes.bold, classes.breakLine)}>{state.comercial_name}</span>
                     </Grid>
                     <Grid item xs={6}>
                         <span className={classes.bold}>{state.cep}</span>
@@ -109,7 +112,7 @@ export default function SupermarketDetailModal(Props: SupermarketDetailModalProp
                         <span className={classes.bold}>{state.cnpj}</span>
                     </Grid>
                     <Grid item xs={6}>
-                        <span className={classes.bold}>{state.owner_phone_number}</span>
+                        <span className={classes.bold}>{state.phone_number}</span>
                     </Grid>
                 </Grid>
 
@@ -129,10 +132,10 @@ export default function SupermarketDetailModal(Props: SupermarketDetailModalProp
                         <span>Telefone</span>
                     </Grid>
                     <Grid item xs={6}>
-                        <span className={classes.bold}>{state.agricultural_producer['first_name'] + ' ' + state.agricultural_producer['last_name']}</span>
+                        <span className={clsx(classes.bold, classes.breakLine)}>{state['first_name'] + ' ' + state['last_name']}</span>
                     </Grid>
                     <Grid item xs={6}>
-                        <span className={classes.bold}>{state.agricultural_producer['phone_number']}</span>
+                        <span className={classes.bold}>{state['owner_phone_number']}</span>
                     </Grid>
                 </Grid>
             </div>
