@@ -32,3 +32,10 @@ export interface ComposterProps {
   emailSupermercado: string;
   emailProdutorAgricola: string;
 }
+
+export interface WarningProps {
+  composterId: string;
+  composterName: string;
+  description: string;
+  startTimestamp: string;
+}
