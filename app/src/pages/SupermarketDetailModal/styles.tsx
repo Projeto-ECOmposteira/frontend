@@ -26,6 +26,9 @@ const useStyles = makeStyles((theme) => ({
   },
   gridContainer: {
     marginBottom: "10px",
+  },
+  breakLine: {
+    wordBreak: 'break-all',
   }
 }));
 

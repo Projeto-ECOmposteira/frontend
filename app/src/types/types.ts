@@ -39,3 +39,10 @@ export interface WarningProps {
   description: string;
   startTimestamp: string;
 }
+
+export interface SupermarketReportProps {
+  pk: number;
+  email: string;
+  owner_name: string;
+  comercial_name: string;
+}
