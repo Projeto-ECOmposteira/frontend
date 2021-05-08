@@ -27,7 +27,7 @@ export default function Warnings() {
 
   useEffect(() => {
     async function loadWarnings() {
-      const response = getWarnings();
+      const response = await getWarnings();
       const finalWarnings = addHourField(response);
       setWarnings(finalWarnings);
     }

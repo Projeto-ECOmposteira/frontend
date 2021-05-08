@@ -1,20 +1,28 @@
 import { WarningProps } from "../types/types";
+import api from "../services/api";
 
-export function getWarnings(): Array<WarningProps> {
-  const warnings = [
-    {
-      composterId: "1",
-      composterName: "Composteira 1",
-      description: "Desconectada há mais de 30 dias",
-      startTimestamp: "2012-12-19T06:01:17.171Z",
-    },
-    {
-      composterId: "2",
-      composterName: "Composteira 2",
-      description: "Desconectada há 01 dia",
-      startTimestamp: "2012-12-19T06:01:17.171Z",
-    },
-  ];
+export async function getWarnings(): Promise<Array<WarningProps>> {
+  let url = '/api/get_composter_alerts/'
+
+  let warnings: Array<WarningProps> = []
+
+  try {
+    let request = await api.get(url)
+
+    request.data.forEach((composters: Array<any>) => {
+      for (let alert in composters) {
+        warnings.push({
+          composterId: composters[alert]['composter']['_id'],
+          composterName: composters[alert]['composter']['name'],
+          description: composters[alert]['description'],
+          startTimestamp: composters[alert]['initDate'],
+        })
+      }
+    });
+  }
+  catch {
+    warnings = []
+  }
 
   return warnings;
 }
