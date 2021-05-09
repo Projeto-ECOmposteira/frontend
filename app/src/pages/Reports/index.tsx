@@ -5,13 +5,10 @@ import React, { useEffect, useState } from "react";
 import {
   Area,
   AreaChart,
-  Bar,
-  BarChart,
   CartesianGrid,
   Label,
   Line,
   LineChart,
-  ResponsiveContainer,
   Tooltip,
   XAxis,
   YAxis,
@@ -189,7 +186,12 @@ export default function Reports() {
               activeDot={{ r: 8 }}
             />
             <Tooltip />
-            <Line type="monotone" unit="%" dataKey="nitrogenio" stroke="#DDA15E" />
+            <Line
+              type="monotone"
+              unit="%"
+              dataKey="nitrogenio"
+              stroke="#DDA15E"
+            />
           </LineChart>
         </Box>
       </Box>
