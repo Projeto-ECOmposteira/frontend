@@ -54,14 +54,6 @@ export default function Warnings() {
             { title: "Horário", field: "hour", align: "left" },
           ]}
           data={warnings}
-          actions={[
-            {
-              icon: "search",
-              tooltip: "Visualizar composteira",
-              onClick: (event, rowData: any) =>
-                console.log(rowData.composterName),
-            },
-          ]}
         />
       </Box>
     </Container>

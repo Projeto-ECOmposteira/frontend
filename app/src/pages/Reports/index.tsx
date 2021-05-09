@@ -114,7 +114,7 @@ export default function Reports() {
   return (
     <Container component="main" className={classes.root}>
       <Typography variant="h5" component="h2" className={classes.header}>
-        Últimos alertas registrados
+        Relatórios das Composteiras
       </Typography>
       <FormControl variant="outlined" className={classes.smallForm}>
         <InputLabel htmlFor="outlined-age-native-simple">Composteira *</InputLabel>

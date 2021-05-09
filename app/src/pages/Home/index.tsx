@@ -18,10 +18,9 @@ export default function Home() {
 
   useEffect(() => {
     async function loadComposters() {
-      const response = getComposters(user?.data?.isSupermarket);
-      setComposters(await response);
+      const response = await getComposters(user?.data?.isSupermarket);
+      setComposters(response);
     }
-
     loadComposters();
   }, []);
 
