@@ -8,10 +8,14 @@ const useStyles = makeStyles((theme) => ({
   content: {
     display: "flex",
     flexDirection: "row",
-    justifyContent: "space-around"
+    justifyContent: "space-around",
+    flexWrap: "wrap"
   },
   header: {
     marginBottom: theme.spacing(6),
+  },
+  report: {
+    marginBottom: theme.spacing(4),
   },
   reportTitle: {
     marginBottom: theme.spacing(2),
