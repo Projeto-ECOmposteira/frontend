@@ -31,6 +31,7 @@ export interface ComposterProps {
   status: number;
   emailSupermercado: string;
   emailProdutorAgricola: string;
+  setContactUsOpen?: any;
 }
 
 export interface WarningProps {
@@ -45,6 +46,19 @@ export interface SupermarketReportProps {
   email: string;
   owner_name: string;
   comercial_name: string;
+}
+
+export interface base64ImageProps {
+  base64Image: string;
+  filename: string;
+}
+
+export interface SendGenericMailProps {
+  user: string;
+  to: string;
+  subject: string;
+  message: string;
+  images: Array<base64ImageProps>;
 }
 
 export interface ReportPageProps {

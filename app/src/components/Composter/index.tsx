@@ -118,7 +118,12 @@ export default function Composter(props: ComposterProps) {
         </CardContent>
       </CardActionArea>
       <CardActionArea className={classes.buttons}>
-        <Button className={classes.sendEmailButton}>Enviar e-mail</Button>
+        <Button
+          className={classes.sendEmailButton}
+          onClick={props.setContactUsOpen}
+        >
+          Enviar e-mail
+        </Button>
         {/* <Button className={classes.detailsButton}>Detalhes</Button> */}
       </CardActionArea>
     </Card>

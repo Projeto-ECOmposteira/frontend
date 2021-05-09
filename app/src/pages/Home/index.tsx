@@ -1,7 +1,7 @@
 import { Grid } from "@material-ui/core";
 import Container from "@material-ui/core/Container";
 import { useStyles } from "./styles";
-import Modal from '@material-ui/core/Modal';
+import Modal from "@material-ui/core/Modal";
 import CreateComposterModal from '../CreateComposterModal'
 import React, { useContext } from "react";
 import { useEffect, useState } from "react";
@@ -9,12 +9,14 @@ import Composter from "../../components/Composter";
 import { getComposters } from "../../services/composter";
 import { ComposterProps } from "../../types/types";
 import Button from "@material-ui/core/Button";
+import ContactEmail from "../ContactEmail";
 import AuthContext from "../../contexts/auth";
 
 export default function Home() {
   const classes = useStyles();
 
   const [composters, setComposters] = useState<Array<ComposterProps>>([]);
+  const [contactUsOpen, setContactUsOpen] = React.useState<boolean>(false);
 
   useEffect(() => {
     async function loadComposters() {
@@ -48,7 +50,6 @@ export default function Home() {
       </Modal>
       <div className={classes.titleButton}>
         <h1 className={classes.header}>Composteiras</h1>
-
         {Boolean(user?.data?.isSupermarket) === false && (
           <Button
             type="button"
@@ -60,9 +61,6 @@ export default function Home() {
             Cadastrar composteira
           </Button>
         )}
-
-
-
       </div>
       <Grid container justify="space-around">
         {composters.map((composter) => (
@@ -84,10 +82,14 @@ export default function Home() {
               status={composter.status}
               emailSupermercado={composter.emailSupermercado}
               emailProdutorAgricola={composter.emailProdutorAgricola}
+              setContactUsOpen={setContactUsOpen}
             />
           </Grid>
         ))}
       </Grid>
+      {contactUsOpen && (
+        <ContactEmail open={contactUsOpen} setOpen={setContactUsOpen} />
+      )}
     </Container>
   );
 }
