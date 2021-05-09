@@ -1,19 +1,21 @@
 import { Grid } from "@material-ui/core";
 import Container from "@material-ui/core/Container";
 import { useStyles } from "./styles";
-import Modal from '@material-ui/core/Modal';
-import CreateComposterModal from '../CreateComposterModal'
+import Modal from "@material-ui/core/Modal";
+import CreateComposterModal from "../CreateComposterModal";
 import React from "react";
 import { useEffect, useState } from "react";
 import Composter from "../../components/Composter";
 import { getComposters } from "../../services/composter";
 import { ComposterProps } from "../../types/types";
 import Button from "@material-ui/core/Button";
+import ContactEmail from "../ContactEmail";
 
 export default function Home() {
   const classes = useStyles();
 
   const [composters, setComposters] = useState<Array<ComposterProps>>([]);
+  const [contactUsOpen, setContactUsOpen] = React.useState(true);
 
   useEffect(() => {
     async function loadComposters() {
@@ -54,7 +56,7 @@ export default function Home() {
           className={classes.button}
         >
           Cadastrar composteira
-          </Button>
+        </Button>
       </div>
       <Grid container justify="space-around">
         {composters.map((composter) => (
@@ -80,6 +82,9 @@ export default function Home() {
           </Grid>
         ))}
       </Grid>
+      {contactUsOpen && (
+        <ContactEmail open={contactUsOpen} setOpen={setContactUsOpen} />
+      )}
     </Container>
   );
 }
