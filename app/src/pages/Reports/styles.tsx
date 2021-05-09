@@ -20,6 +20,11 @@ const useStyles = makeStyles((theme) => ({
   reportTitle: {
     marginBottom: theme.spacing(2),
     fontWeight: 500,
+  },
+  smallForm: {
+    width: '500px',
+    marginTop: '-20px',
+    marginBottom: '30px',
   }
 }));
 

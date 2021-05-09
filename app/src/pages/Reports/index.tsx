@@ -1,7 +1,7 @@
-import { Box, Typography } from "@material-ui/core";
+import { Box, FormControl, InputLabel, Select, Typography } from "@material-ui/core";
 import Container from "@material-ui/core/Container";
 import moment from "moment";
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import {
   Area,
   AreaChart,
@@ -13,8 +13,10 @@ import {
   XAxis,
   YAxis,
 } from "recharts";
+import AuthContext from "../../contexts/auth";
+import { getComposters } from "../../services/composter";
 import { getReports } from "../../services/reports";
-import { ReportPageProps } from "../../types/types";
+import { ComposterProps, ReportPageProps } from "../../types/types";
 import { useStyles } from "./styles";
 
 export interface TemperatureData {
@@ -60,25 +62,75 @@ export default function Reports() {
     return carbonNitrogen;
   };
 
+  const [composters, setComposters] = useState<Array<ComposterProps>>([]);
+
+  const { user } = useContext(AuthContext);
+
   useEffect(() => {
-    async function loadReports() {
-      const response = await getReports();
-
-      const temperatures = loadTemperatureData(response);
-      setTemperature(temperatures);
-
-      const carbonNitrogens = loadCarbonNitrogen(response);
-      setCarbonNitrogen(carbonNitrogens);
+    async function loadComposters() {
+      const response = await getComposters(user?.data?.isSupermarket);
+      setComposters(response);
     }
 
-    loadReports();
+    loadComposters();
   }, []);
+
+  useEffect(() => {
+    if (composters.length > 0) {
+      setComposteiraId(composters[0]['_id']);
+    }
+  }, [composters]);
+
+  async function loadReports(id: string) {
+    const response = await getReports(id);
+
+    const temperatures = loadTemperatureData(response);
+    setTemperature(temperatures);
+
+    const carbonNitrogens = loadCarbonNitrogen(response);
+    setCarbonNitrogen(carbonNitrogens);
+  }
+
+  function getCompostersObjects() {
+    const compostersObjects: any = [];
+    composters.forEach((_composter: any) => {
+      compostersObjects.push(<option key={_composter.nome} value={_composter._id}>{_composter.nome}</option>)
+    });
+    return compostersObjects;
+  }
+
+  const [composteiraId, setComposteiraId] = useState(String)
+  const handleChange = (e: any) => {
+    let { value } = e.target;
+    setComposteiraId(value)
+  };
+
+  useEffect(() => {
+    if (composters.length > 0) {
+      loadReports(String(composteiraId));
+    }
+  }, [composteiraId]);
 
   return (
     <Container component="main" className={classes.root}>
       <Typography variant="h5" component="h2" className={classes.header}>
         Últimos alertas registrados
       </Typography>
+      <FormControl variant="outlined" className={classes.smallForm}>
+        <InputLabel htmlFor="outlined-age-native-simple">Composteira *</InputLabel>
+        <Select
+          required
+          native
+          onChange={handleChange}
+          label="Composteira *"
+          value={composteiraId}
+          id="composteiraId"
+          name="composteiraId"
+        >
+          <option aria-label="None" value="" />
+          {getCompostersObjects()}
+        </Select>
+      </FormControl>
       <Box className={classes.content}>
         <Box className={classes.report}>
           <Typography
