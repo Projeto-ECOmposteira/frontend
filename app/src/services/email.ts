@@ -4,7 +4,8 @@ import api from "../services/api";
 export async function postGenericMail(
   emailContent: SendGenericMailProps
 ): Promise<void> {
-  let url = "http://localhost:8003/mail/send";
+  const baseUrl = `${process.env.REACT_APP_NOTIFICATION_MICROSSERVICE}`;
+  const url = baseUrl + "/mail/send";
 
   await api.post(url, emailContent);
 }
