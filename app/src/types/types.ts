@@ -31,6 +31,7 @@ export interface ComposterProps {
   status: number;
   emailSupermercado: string;
   emailProdutorAgricola: string;
+  setContactUsOpen?: any;
 }
 
 export interface WarningProps {

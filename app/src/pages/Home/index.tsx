@@ -15,7 +15,7 @@ export default function Home() {
   const classes = useStyles();
 
   const [composters, setComposters] = useState<Array<ComposterProps>>([]);
-  const [contactUsOpen, setContactUsOpen] = React.useState(true);
+  const [contactUsOpen, setContactUsOpen] = React.useState<boolean>(false);
 
   useEffect(() => {
     async function loadComposters() {
@@ -78,6 +78,7 @@ export default function Home() {
               status={composter.status}
               emailSupermercado={composter.emailSupermercado}
               emailProdutorAgricola={composter.emailProdutorAgricola}
+              setContactUsOpen={setContactUsOpen}
             />
           </Grid>
         ))}
