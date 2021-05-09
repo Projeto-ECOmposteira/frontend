@@ -22,8 +22,8 @@ export const AuthProvider: React.FC = ({ children }) => {
       const storagedToken = localStorage.getItem('@RAuth:token');
 
       if (storagedUser && storagedToken) {
-        setUser(JSON.parse(storagedUser));
         api.defaults.headers.Authorization = `Bearer ${storagedToken}`;
+        setUser(JSON.parse(storagedUser));
       }
     }
 
@@ -36,7 +36,6 @@ export const AuthProvider: React.FC = ({ children }) => {
     let response = null
     try {
       response = await auth.signIn(email, password);
-      console.log(response.data)
       let user = {
         'token': response.data.access,
         'data': {
@@ -45,9 +44,10 @@ export const AuthProvider: React.FC = ({ children }) => {
           'isSupermarket': response.data.user.isSupermarket,
         }
       }
-      setUser(user);
 
       api.defaults.headers.Authorization = `Bearer ${user.token}`;
+      
+      setUser(user);
 
       localStorage.setItem('@RAuth:user', JSON.stringify(user));
       localStorage.setItem('@RAuth:token', user.token);

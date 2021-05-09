@@ -5,7 +5,7 @@ import Composters from "../pages/Home";
 import Reports from "../pages/Reports";
 import Supermarkets from "../pages/Supermarkets";
 import Warnings from "../pages/Warnings";
-import AuthContext from "../contexts/auth"
+import AuthContext from "../contexts/auth";
 
 export default function InternalRoutes() {
   const { user } = useContext(AuthContext);
@@ -15,10 +15,9 @@ export default function InternalRoutes() {
       <Route path="/home" component={Composters} />
       <Route path="/warnings" component={Warnings} />
       <Route path="/reports" component={Reports} />
-      {
-        Boolean(user?.data?.isSupermarket) == false &&
+      {Boolean(user?.data?.isSupermarket) === false && (
         <Route path="/supermarkets" component={Supermarkets} />
-      }
+      )}
       <Route path="/allowed-products" component={AllowedProducts} />
 
       <Redirect from="/" to="/home" />

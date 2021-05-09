@@ -60,3 +60,12 @@ export interface SendGenericMailProps {
   message: string;
   images: Array<base64ImageProps>;
 }
+
+export interface ReportPageProps {
+  timestamp: string;
+  temperature: number;
+  cn: {
+    c: number;
+    n: number;
+  },
+}

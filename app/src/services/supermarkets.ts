@@ -1,4 +1,4 @@
-import { SupermarketReportProps, WarningProps } from "../types/types";
+import { SupermarketReportProps } from "../types/types";
 import api from "../services/api";
 
 export async function getSupermarkets(): Promise<Array<SupermarketReportProps>> {
