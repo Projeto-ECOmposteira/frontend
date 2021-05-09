@@ -46,3 +46,16 @@ export interface SupermarketReportProps {
   owner_name: string;
   comercial_name: string;
 }
+
+export interface base64ImageProps {
+  base64Image: string;
+  filename: string;
+}
+
+export interface SendGenericMailProps {
+  user: string;
+  to: string;
+  subject: string;
+  message: string;
+  images: Array<base64ImageProps>;
+}
