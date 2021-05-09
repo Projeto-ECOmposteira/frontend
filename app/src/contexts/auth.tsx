@@ -22,8 +22,8 @@ export const AuthProvider: React.FC = ({ children }) => {
       const storagedToken = localStorage.getItem('@RAuth:token');
 
       if (storagedUser && storagedToken) {
-        setUser(JSON.parse(storagedUser));
         api.defaults.headers.Authorization = `Bearer ${storagedToken}`;
+        setUser(JSON.parse(storagedUser));
       }
     }
 
