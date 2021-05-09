@@ -46,15 +46,18 @@ export default function SideMenu(props: SideMenuProps) {
           primary="Produtos permitidos"
           icon={<ProductIcon />}
         />
-        <SideMenuItem to="/reports" primary="Relatórios" icon={<ReportIcon />} />
-        {
-          Boolean(user?.data?.isSupermarket) == false &&
+        <SideMenuItem
+          to="/reports"
+          primary="Relatórios"
+          icon={<ReportIcon />}
+        />
+        {Boolean(user?.data?.isSupermarket) === false && (
           <SideMenuItem
             to="/supermarkets"
             primary="Supermercados"
             icon={<SupermarketIcon />}
           />
-        }
+        )}
       </List>
     </Drawer>
   );

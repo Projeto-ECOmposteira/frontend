@@ -36,7 +36,6 @@ export const AuthProvider: React.FC = ({ children }) => {
     let response = null
     try {
       response = await auth.signIn(email, password);
-      console.log(response.data)
       let user = {
         'token': response.data.access,
         'data': {

@@ -46,3 +46,12 @@ export interface SupermarketReportProps {
   owner_name: string;
   comercial_name: string;
 }
+
+export interface ReportPageProps {
+  timestamp: string;
+  temperature: number;
+  cn: {
+    c: number;
+    n: number;
+  },
+}

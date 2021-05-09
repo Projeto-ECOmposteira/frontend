@@ -3,12 +3,13 @@ import Container from "@material-ui/core/Container";
 import { useStyles } from "./styles";
 import Modal from '@material-ui/core/Modal';
 import CreateComposterModal from '../CreateComposterModal'
-import React from "react";
+import React, { useContext } from "react";
 import { useEffect, useState } from "react";
 import Composter from "../../components/Composter";
 import { getComposters } from "../../services/composter";
 import { ComposterProps } from "../../types/types";
 import Button from "@material-ui/core/Button";
+import AuthContext from "../../contexts/auth";
 
 export default function Home() {
   const classes = useStyles();
@@ -17,8 +18,8 @@ export default function Home() {
 
   useEffect(() => {
     async function loadComposters() {
-      const response = getComposters();
-      setComposters(response);
+      const response = getComposters(user?.data?.isSupermarket);
+      setComposters(await response);
     }
 
     loadComposters();
@@ -34,6 +35,8 @@ export default function Home() {
     setOpen(false);
   };
 
+  const { user } = useContext(AuthContext);
+
   return (
     <Container component="main">
       <Modal
@@ -46,15 +49,21 @@ export default function Home() {
       </Modal>
       <div className={classes.titleButton}>
         <h1 className={classes.header}>Composteiras</h1>
-        <Button
-          type="button"
-          onClick={handleOpen}
-          variant="contained"
-          color="secondary"
-          className={classes.button}
-        >
-          Cadastrar composteira
+
+        {Boolean(user?.data?.isSupermarket) === false && (
+          <Button
+            type="button"
+            onClick={handleOpen}
+            variant="contained"
+            color="secondary"
+            className={classes.button}
+          >
+            Cadastrar composteira
           </Button>
+        )}
+
+
+
       </div>
       <Grid container justify="space-around">
         {composters.map((composter) => (

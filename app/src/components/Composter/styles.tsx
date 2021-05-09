@@ -23,7 +23,7 @@ const useStyles = makeStyles((theme) => ({
   },
   buttons: {
     display: "flex !important",
-    justifyContent: "space-between",
+    justifyContent: "flex-end",
     alignItems: "center",
     padding: theme.spacing(1),
   },

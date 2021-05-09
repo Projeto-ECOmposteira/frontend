@@ -53,7 +53,6 @@ export default function CreateComposterModal(Props: CreateComposterModalProps) {
     let url = `${process.env["REACT_APP_API_GATEWAY_BASE_URL"]}/api/get_producer_supermarket/`
     api.get(url)
       .then(function (response: any) {
-        console.log(response.data)
         for (let i in response.data) {
           setSupermakets(new Map(supermarket.set(response.data[i].pk, response.data[i].comercial_name)));
         }
