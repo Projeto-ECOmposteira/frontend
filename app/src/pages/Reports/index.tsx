@@ -40,53 +40,73 @@ export default function Reports() {
   }, []);
 
   return (
-    <Container component="main" >
+    <Container component="main" className={classes.root}>
       <Typography variant="h5" component="h2" className={classes.header}>
         Últimos alertas registrados
       </Typography>
-      <Box>
-        <AreaChart width={550} height={300} data={temperatureData}>
-          <defs>
-            <linearGradient id="colorUv" x1="0" y1="0" x2="0" y2="1">
-              <stop offset="30%" stopColor="#BC6C25" stopOpacity={0.8} />
-              <stop offset="95%" stopColor="#BC6C25" stopOpacity={0} />
-            </linearGradient>
-          </defs>
-          <XAxis
-            dataKey="timestamp"
-            domain={["auto", "auto"]}
-            name="Time"
-            tickFormatter={(unixTime) => moment(unixTime).format("DD/MM HH:mm")}
-            type="number"
-            scale="time"
+      <Box className={classes.content}>
+        <Box>
+          <Typography
+            variant="h5"
+            component="h3"
+            className={classes.reportTitle}
           >
-            <Label
-              value={"Horário (h)"}
-              position="insideBottom"
-              dy={8}
-              style={{ textAnchor: "middle" }}
+            Temperatura da Composteira
+          </Typography>
+          <AreaChart width={500} height={300} data={temperatureData}>
+            <defs>
+              <linearGradient id="colorUv" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="30%" stopColor="#BC6C25" stopOpacity={0.8} />
+                <stop offset="95%" stopColor="#BC6C25" stopOpacity={0} />
+              </linearGradient>
+            </defs>
+            <XAxis
+              dataKey="timestamp"
+              domain={["auto", "auto"]}
+              name="Time"
+              tickFormatter={(unixTime) =>
+                moment(unixTime).format("DD/MM HH:mm")
+              }
+              type="number"
+              scale="time"
+            >
+              <Label
+                value={"Horário (h)"}
+                position="insideBottom"
+                dy={8}
+                style={{ textAnchor: "middle" }}
+              />
+            </XAxis>
+            <YAxis>
+              <Label
+                value={"Temperatura (°C)"}
+                position="middle"
+                dx={-8}
+                angle={-90}
+                style={{ textAnchor: "middle" }}
+              />
+            </YAxis>
+            <CartesianGrid strokeDasharray="3 3" />
+            <Area
+              dot={{ stroke: "orange", strokeWidth: 1 }}
+              type="monotone"
+              dataKey="temperature"
+              stroke="#8884d8"
+              fillOpacity={1}
+              fill="url(#colorUv)"
+              unit="° C"
             />
-          </XAxis>
-          <YAxis>
-            <Label
-              value={"Temperatura (°C)"}
-              position="middle"
-              dx={-8}
-              angle={-90}
-              style={{ textAnchor: "middle" }}
-            />
-          </YAxis>
-          <CartesianGrid strokeDasharray="3 3" />
-          <Area
-            dot={{ stroke: "orange", strokeWidth: 1 }}
-            type="monotone"
-            dataKey="temperature"
-            stroke="#8884d8"
-            fillOpacity={1}
-            fill="url(#colorUv)"
-            unit="° C"
-          />
-        </AreaChart>
+          </AreaChart>
+        </Box>
+        <Box>
+          <Typography
+            variant="h5"
+            component="h3"
+            className={classes.reportTitle}
+          >
+            Temperatura da Composteira
+          </Typography>
+        </Box>
       </Box>
     </Container>
   );
