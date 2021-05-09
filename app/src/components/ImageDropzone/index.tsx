@@ -3,11 +3,7 @@ import HighlightOffIcon from "@material-ui/icons/HighlightOff";
 import { DropzoneRootProps, useDropzone } from "react-dropzone";
 import DropzoneIcon from "../../assets/img/dropzone-icon.svg";
 import { useStyles } from "./styles";
-
-export interface base64ImageProps {
-  base64Image: string;
-  filename: string;
-}
+import { base64ImageProps } from "../../types/types";
 
 export interface DropzoneProps {
   base64Images: Array<base64ImageProps>;
