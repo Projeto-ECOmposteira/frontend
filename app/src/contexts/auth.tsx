@@ -44,9 +44,10 @@ export const AuthProvider: React.FC = ({ children }) => {
           'isSupermarket': response.data.user.isSupermarket,
         }
       }
-      setUser(user);
 
       api.defaults.headers.Authorization = `Bearer ${user.token}`;
+      
+      setUser(user);
 
       localStorage.setItem('@RAuth:user', JSON.stringify(user));
       localStorage.setItem('@RAuth:token', user.token);
