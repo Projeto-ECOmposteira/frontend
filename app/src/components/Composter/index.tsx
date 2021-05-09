@@ -62,56 +62,56 @@ export default function Composter(props: ComposterProps) {
               <ComposterMeasure
                 name={measures.weightIcon.name}
                 image={measures.weightIcon.image}
-                data={`${props.peso} kg`}
+                data={`${props.peso === 0 ? '-' : props.peso } kg`}
               />
             </Grid>
             <Grid key="2" item>
               <ComposterMeasure
                 name={measures.ph.name}
                 image={measures.ph.image}
-                data={String(props.ph)}
+                data={String(props.ph === 0 ? '-' : props.ph)}
               />
             </Grid>
             <Grid key="3" item>
               <ComposterMeasure
                 name={measures.carbonNitrogen.name}
                 image={measures.carbonNitrogen.image}
-                data={`${props.cn}/1`}
+                data={`${props.cn === 0 ? '-' : props.cn}/1`}
               />
             </Grid>
             <Grid key="4" item>
               <ComposterMeasure
                 name={measures.oxygen.name}
                 image={measures.oxygen.image}
-                data={`${props.o2} ml/g`}
+                data={`${props.o2 === 0 ? '-' : props.o2} ml/g`}
               />
             </Grid>
             <Grid key="5" item>
               <ComposterMeasure
                 name={measures.temperatureIcon.name}
                 image={measures.temperatureIcon.image}
-                data={`${props.temperatura} °C`}
+                data={`${props.temperatura === 0 ? '-' : props.temperatura} °C`}
               />
             </Grid>
             <Grid key="6" item>
               <ComposterMeasure
                 name={measures.pressureIcon.name}
                 image={measures.pressureIcon.image}
-                data={`${props.pressao} hpa`}
+                data={`${props.pressao === 0 ? '-' : props.pressao} hpa`}
               />
             </Grid>
             <Grid key="7" item>
               <ComposterMeasure
                 name={measures.humidity.name}
                 image={measures.humidity.image}
-                data={`${props.umidade} %`}
+                data={`${props.umidade === 0 ? '-' : props.umidade} %`}
               />
             </Grid>
             <Grid key="8" item>
               <ComposterMeasure
                 name={measures.carbonDioxide.name}
                 image={measures.carbonDioxide.image}
-                data={`${props.co2} ppm`}
+                data={`${props.co2 === 0 ? '-' : props.co2} ppm`}
               />
             </Grid>
           </Grid>
@@ -119,7 +119,7 @@ export default function Composter(props: ComposterProps) {
       </CardActionArea>
       <CardActionArea className={classes.buttons}>
         <Button className={classes.sendEmailButton}>Enviar e-mail</Button>
-        <Button className={classes.detailsButton}>Detalhes</Button>
+        {/* <Button className={classes.detailsButton}>Detalhes</Button> */}
       </CardActionArea>
     </Card>
   );

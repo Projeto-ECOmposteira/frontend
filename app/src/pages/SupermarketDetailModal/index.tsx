@@ -41,7 +41,6 @@ export default function SupermarketDetailModal(Props: SupermarketDetailModalProp
         let url = `${process.env["REACT_APP_API_GATEWAY_BASE_URL"]}/api/supermarkets/${Props.id}`
         axios.get(url)
             .then(function (response: any) {
-                console.log(response.data)
                 setState(response.data)
             })
             .catch(function (error: any) {
